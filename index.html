@@ -1,82 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#140d2d" />
-  <title>¡Feliz cumpleaños! 🎉</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#140d2d">
+  <title>¡Feliz cumpleaños, Brenda! 🎉</title>
+  <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <canvas id="confetti" aria-hidden="true"></canvas>
   <div class="glow glow-one" aria-hidden="true"></div>
   <div class="glow glow-two" aria-hidden="true"></div>
+
   <main class="birthday-card">
-    <div class="eyebrow"><span class="sparkle">✦</span> HOY ES UN DÍA ESPECIAL <span class="sparkle">✦</span></div>
-    <div class="balloons" aria-hidden="true">
-      <span class="balloon balloon-one"></span><span class="balloon balloon-two"></span><span class="balloon balloon-three"></span>
-    </div>
-    <div class="cake" aria-label="Tarta de cumpleaños con velas" role="img">
-      <div class="candles"><i></i><i></i><i></i></div>
-      <div class="cake-top"></div><div class="cake-bottom"></div><div class="plate"></div>
-    </div>
-    <h1>¡Feliz <span>cumpleaños Brenda!</span></h1>
-    <p class="intro">Hoy celebramos a alguien increíble. Que este nuevo año esté lleno de aventuras, sonrisas y momentos inolvidables. 💖</p>
-    <p class="signature">Con mucho cariño, para ti ✨</p>
-    <button id="surpriseBtn" type="button">🎁 Abrir mi sorpresa <span aria-hidden="true">→</span></button>
-    <p class="hint">Psst... ¡haz clic y descubre tu regalo!</p>
-    <section id="surprise" class="surprise" aria-live="polite" hidden>
-      <div class="gift">💝</div>
-      <h2>¡Que todos tus deseos se cumplan!</h2>
-      <p>Te mereces un año lleno de felicidad, amor y sueños hechos realidad. 🥳</p>
-      <button id="againBtn" class="again" type="button">🎊 ¡Más confeti!</button>
-      
-<section class="seccion-videos">
-    <h2>🎬 Vídeos de cumpleaños</h2>
-    <p>¡Mensajes especiales para este gran día! ❤️</p>
-
-    <div class="galeria-videos">
-
-        <div class="tarjeta-video">
-            <h3>Felicitación de María 💖</h3>
-            <video controls preload="metadata">
-                <source src="videos/felicitacion-maria.mp4"
-                        type="video/mp4">
-            </video>
-        </div>
-
-        <div class="tarjeta-video">
-            <h3>Felicitación de Pedro 🎉</h3>
-            <video controls preload="metadata">
-                <source src="videos/felicitacion-pedro.mp4"
-                        type="video/mp4">
-            </video>
-        </div>
-
-    </div>
-</section>
-
+    <section id="seleccion-usuario" class="seleccion-usuario">
+      <div class="eyebrow">✦ HOY ES UN DÍA ESPECIAL ✦</div>
+      <h1>¡Una sorpresa para <span>Brenda!</span></h1>
+      <p class="intro">Antes de continuar, dinos quién eres ❤️</p>
+      <div class="opciones-usuario">
+        <button type="button" id="btnBrenda">👑 Soy Brenda</button>
+        <button type="button" id="btnInvitado">💌 Quiero felicitarla</button>
+      </div>
     </section>
-    <section class="felicitaciones">
-    <h2>🎥 Muro de felicitaciones</h2>
-    <p>¡Deja tu mensaje o sube un vídeo especial!</p>
 
-    <form id="formFelicitacion">
-        <input type="text" id="nombre" placeholder="Tu nombre" required>
+    <section id="zona-brenda" class="oculto">
+      <div class="eyebrow">✦ HOY ES UN DÍA ESPECIAL ✦</div>
+      <div class="balloons" aria-hidden="true">
+        <span class="balloon balloon-one"></span>
+        <span class="balloon balloon-two"></span>
+        <span class="balloon balloon-three"></span>
+      </div>
+      <div class="cake" aria-label="Tarta de cumpleaños con velas" role="img">
+        <div class="candles"><i></i><i></i><i></i></div>
+        <div class="cake-top"></div><div class="cake-bottom"></div><div class="plate"></div>
+      </div>
+      <h1>¡Feliz <span>cumpleaños Brenda!</span></h1>
+      <p class="intro">Hoy celebramos a alguien increíble. Que este nuevo año esté lleno de aventuras, sonrisas y momentos inolvidables. 💖</p>
+      <p class="signature">Con mucho cariño, para ti ✨</p>
+      <p class="intro">Hay muchas personas que quieren decirte algo...</p>
+      <button type="button" id="abrirSorpresa">🎁 Abrir mi sorpresa</button>
 
-        <textarea id="mensaje"
-            placeholder="Escribe tu felicitación..."></textarea>
+      <div id="contenido-sorpresa" class="oculto">
+        <section class="contenido-seccion">
+          <h2>💌 Mensajes para ti</h2>
+          <div id="muroFelicitaciones" aria-live="polite"></div>
+        </section>
+        <section class="contenido-seccion">
+          <h2>🎬 Vídeos para Brenda</h2>
+          <div id="galeriaVideos" class="galeria-videos"></div>
+        </section>
+      </div>
+    </section>
 
-        <label for="video">Sube tu vídeo 🎬</label>
-        <input type="file" id="video" accept="video/*">
+    <section id="zona-invitado" class="oculto">
+      <div class="eyebrow">✦ UNA FELICITACIÓN PARA BRENDA ✦</div>
+      <h1>💌 Felicita a <span>Brenda</span></h1>
+      <p class="intro">Escríbele algo bonito para su cumpleaños.</p>
+      <form id="formFelicitacion">
+        <label for="nombre">Tu nombre</label>
+        <input type="text" id="nombre" name="nombre" maxlength="60" placeholder="Tu nombre" autocomplete="name" required>
+        <label for="mensaje">Tu felicitación</label>
+        <textarea id="mensaje" name="mensaje" maxlength="2000" placeholder="Escribe tu felicitación..." required></textarea>
+        <button type="submit">💖 Enviar felicitación</button>
+        <p id="estadoFormulario" class="estado-formulario" aria-live="polite"></p>
+      </form>
+      <div class="enviar-video">
+        <h2>🎥 ¿Quieres enviar un vídeo?</h2>
+        <p>Si quieres mandarle un vídeo a Brenda, ponte en contacto conmigo y lo añadiré a la sorpresa.</p>
+        <a href="mailto:santimartinezcordoba@gmail.com?subject=Video%20de%20cumplea%C3%B1os%20para%20Brenda">📧 santimartinezcordoba@gmail.com</a>
+      </div>
+    </section>
 
-        <button type="submit">Enviar felicitación 💌</button>
-    </form>
-
-    <div id="muroFelicitaciones"></div>
-</section>
+    <button type="button" id="volverInicio" class="volver oculto">← Volver a elegir</button>
   </main>
-  <footer>Hecho con ❤️ para un día inolvidable</footer>
+  <footer id="piePagina" class="oculto">Hecho con ❤️ para un día inolvidable</footer>
 </body>
 </html>

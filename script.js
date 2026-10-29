@@ -1,100 +1,171 @@
-const canvas = document.getElementById('confetti');
-const ctx = canvas.getContext('2d');
-const surprise = document.getElementById('surprise');
-let pieces = [];
-let frame = null;
-let width = 0;
-let height = 0;
-const palette = ['#ff79bb','#ffd982','#b49aff','#7de4d6','#ffffff','#ff9f80'];
-function resize() {
-  const ratio = Math.min(window.devicePixelRatio || 1, 2);
-  width = window.innerWidth;
-  height = window.innerHeight;
-  canvas.width = Math.round(width * ratio);
-  canvas.height = Math.round(height * ratio);
-  ctx.setTransform(ratio,0,0,ratio,0,0);
-}
-window.addEventListener('resize', resize);
-resize();
-function celebrate(amount = 160) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  for (let i = 0; i < amount; i++) {
-    pieces.push({
-      x: Math.random() * width,
-      y: -20 - Math.random() * height * .7,
-      vx: (Math.random() - .5) * 3,
-      vy: 1.5 + Math.random() * 3,
-      size: 4 + Math.random() * 7,
-      color: palette[Math.floor(Math.random() * palette.length)],
-      angle: Math.random() * Math.PI * 2,
-      spin: (Math.random() - .5) * .15,
-      sway: Math.random() * 7,
-      life: 0
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  const seleccion = document.getElementById("seleccion-usuario");
+  const zonaBrenda = document.getElementById("zona-brenda");
+  const zonaInvitado = document.getElementById("zona-invitado");
+  const contenidoSorpresa = document.getElementById("contenido-sorpresa");
+  const volverInicio = document.getElementById("volverInicio");
+  const piePagina = document.getElementById("piePagina");
+
+  const btnBrenda = document.getElementById("btnBrenda");
+  const btnInvitado = document.getElementById("btnInvitado");
+  const abrirSorpresa = document.getElementById("abrirSorpresa");
+  const form = document.getElementById("formFelicitacion");
+  const muro = document.getElementById("muroFelicitaciones");
+  const galeria = document.getElementById("galeriaVideos");
+  const estadoFormulario = document.getElementById("estadoFormulario");
+
+  function mostrarModo(modo) {
+    seleccion.classList.add("oculto");
+    zonaBrenda.classList.add("oculto");
+    zonaInvitado.classList.add("oculto");
+    contenidoSorpresa.classList.add("oculto");
+
+    if (modo === "brenda") zonaBrenda.classList.remove("oculto");
+    if (modo === "invitado") zonaInvitado.classList.remove("oculto");
+
+    volverInicio.classList.remove("oculto");
+    piePagina.classList.remove("oculto");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
-  if (frame === null) frame = requestAnimationFrame(tick);
-}
-function tick() {
-  ctx.clearRect(0,0,width,height);
-  pieces = pieces.filter(p => p.y < height + 30 && p.life < 400);
-  pieces.forEach(p => {
-    p.life++;
-    p.x += p.vx + Math.sin(p.life * .04 + p.sway) * .55;
-    p.y += p.vy;
-    p.angle += p.spin;
-    ctx.save();
-    ctx.translate(p.x, p.y);
-    ctx.rotate(p.angle);
-    ctx.fillStyle = p.color;
-    ctx.fillRect(-p.size/2,-p.size/3,p.size,p.size*.65);
-    ctx.restore();
+
+  btnBrenda.addEventListener("click", () => mostrarModo("brenda"));
+  btnInvitado.addEventListener("click", () => mostrarModo("invitado"));
+
+  volverInicio.addEventListener("click", () => {
+    zonaBrenda.classList.add("oculto");
+    zonaInvitado.classList.add("oculto");
+    contenidoSorpresa.classList.add("oculto");
+    seleccion.classList.remove("oculto");
+    volverInicio.classList.add("oculto");
+    piePagina.classList.add("oculto");
+    abrirSorpresa.disabled = false;
+    abrirSorpresa.textContent = "🎁 Abrir mi sorpresa";
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
-  if (pieces.length) frame = requestAnimationFrame(tick);
-  else {frame = null;ctx.clearRect(0,0,width,height);}
-}
-document.getElementById('surpriseBtn').addEventListener('click', () => {
-  surprise.hidden = false;
-  celebrate(220);
-  document.getElementById('surpriseBtn').textContent = '💖 ¡Sorpresa desbloqueada!';
-});
-document.getElementById('againBtn').addEventListener('click', () => celebrate(180));
-window.addEventListener('load', () => setTimeout(() => celebrate(75), 350));
 
-const form = document.getElementById("formFelicitacion");
-const muro = document.getElementById("muroFelicitaciones");
+  function lanzarConfeti() {
+    const colores = ["#ff69b4", "#ffd700", "#b86bff", "#ffffff", "#ff99cc"];
+    for (let i = 0; i < 120; i++) {
+      const pieza = document.createElement("div");
+      pieza.style.cssText = `position:fixed;width:${Math.random()*8+5}px;height:${Math.random()*8+5}px;background:${colores[Math.floor(Math.random()*colores.length)]};left:${Math.random()*100}vw;top:-20px;border-radius:2px;z-index:9999;pointer-events:none`;
+      document.body.appendChild(pieza);
+      const animacion = pieza.animate([
+        { transform: "translateY(0) rotate(0deg)", opacity: 1 },
+        { transform: `translateY(105vh) rotate(${Math.random()*720}deg)`, opacity: 0 }
+      ], { duration: Math.random()*2500+2500, easing: "linear" });
+      animacion.onfinish = () => pieza.remove();
+    }
+  }
 
-form.addEventListener("submit", function (e) {
-    e.preventDefault();
+  abrirSorpresa.addEventListener("click", async () => {
+    contenidoSorpresa.classList.remove("oculto");
+    abrirSorpresa.disabled = true;
+    abrirSorpresa.textContent = "💖 ¡Sorpresa!";
+    lanzarConfeti();
+    await Promise.all([cargarFelicitaciones(), cargarVideos()]);
+    contenidoSorpresa.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
-    const nombre = document.getElementById("nombre").value.trim();
-    const mensaje = document.getElementById("mensaje").value.trim();
-    const video = document.getElementById("video").files[0];
+  async function cargarFelicitaciones() {
+    muro.textContent = "💌 Cargando felicitaciones...";
+    try {
+      const respuesta = await fetch("/api/felicitaciones");
+      if (!respuesta.ok) throw new Error("Error al cargar los mensajes");
+      const felicitaciones = await respuesta.json();
+      muro.replaceChildren();
 
-    if (!mensaje && !video) {
-        alert("Escribe un mensaje o selecciona un vídeo.");
+      if (!Array.isArray(felicitaciones) || felicitaciones.length === 0) {
+        muro.textContent = "Todavía no hay felicitaciones. ¡Seguro que pronto llegarán! 💖";
         return;
+      }
+
+      felicitaciones.forEach((f) => {
+        const tarjeta = document.createElement("article");
+        tarjeta.className = "felicitacion";
+        const nombre = document.createElement("h3");
+        nombre.textContent = `💌 ${f.nombre || "Alguien especial"}`;
+        const mensaje = document.createElement("p");
+        mensaje.textContent = f.mensaje || "";
+        tarjeta.append(nombre, mensaje);
+        muro.appendChild(tarjeta);
+      });
+    } catch (error) {
+      console.error(error);
+      muro.textContent = "No se pudieron cargar las felicitaciones. Inténtalo más tarde.";
     }
+  }
 
-    const felicitacion = document.createElement("div");
-    felicitacion.classList.add("felicitacion");
+  async function cargarVideos() {
+    galeria.textContent = "🎬 Cargando vídeos...";
+    try {
+      const respuesta = await fetch("/videos.json");
+      if (!respuesta.ok) throw new Error("No se pudo encontrar videos.json");
+      const videos = await respuesta.json();
+      galeria.replaceChildren();
 
-    const titulo = document.createElement("h3");
-    titulo.textContent = "💌 " + nombre;
-    felicitacion.appendChild(titulo);
+      if (!Array.isArray(videos) || videos.length === 0) {
+        galeria.textContent = "Todavía no hay vídeos.";
+        return;
+      }
 
-    if (mensaje) {
-        const parrafo = document.createElement("p");
-        parrafo.textContent = mensaje;
-        felicitacion.appendChild(parrafo);
-    }
-
-    if (video) {
+      videos.forEach((item) => {
+        if (!item || typeof item.archivo !== "string") return;
+        const tarjeta = document.createElement("article");
+        tarjeta.className = "tarjeta-video";
+        const titulo = document.createElement("h3");
+        titulo.textContent = item.titulo || "Una felicitación especial";
+        const autor = document.createElement("p");
+        autor.textContent = `🎥 De: ${item.nombre || "Alguien especial"}`;
         const reproductor = document.createElement("video");
         reproductor.controls = true;
-        reproductor.src = URL.createObjectURL(video);
-        felicitacion.appendChild(reproductor);
+        reproductor.preload = "metadata";
+        reproductor.playsInline = true;
+        const source = document.createElement("source");
+        source.src = item.archivo;
+        source.type = "video/mp4";
+        reproductor.appendChild(source);
+        tarjeta.append(titulo, autor, reproductor);
+        galeria.appendChild(tarjeta);
+      });
+
+      if (!galeria.children.length) galeria.textContent = "No hay vídeos válidos en la galería.";
+    } catch (error) {
+      console.error(error);
+      galeria.textContent = "No se pudieron cargar los vídeos.";
+    }
+  }
+
+  form.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    const nombre = document.getElementById("nombre").value.trim();
+    const mensaje = document.getElementById("mensaje").value.trim();
+    const boton = form.querySelector('button[type="submit"]');
+
+    if (!nombre || !mensaje) {
+      estadoFormulario.textContent = "Escribe tu nombre y tu felicitación ❤️";
+      return;
     }
 
-    muro.prepend(felicitacion);
-    form.reset();
+    const datos = new FormData();
+    datos.append("nombre", nombre);
+    datos.append("mensaje", mensaje);
+    boton.disabled = true;
+    boton.textContent = "💌 Enviando...";
+    estadoFormulario.textContent = "";
+
+    try {
+      const respuesta = await fetch("/api/felicitaciones", { method: "POST", body: datos });
+      const resultado = await respuesta.json().catch(() => ({}));
+      if (!respuesta.ok) throw new Error(resultado.error || "No se pudo enviar la felicitación.");
+      form.reset();
+      estadoFormulario.textContent = "¡Tu felicitación se ha enviado! Brenda podrá verla al abrir su sorpresa. 💖";
+      lanzarConfeti();
+    } catch (error) {
+      console.error(error);
+      estadoFormulario.textContent = error.message || "Ha ocurrido un error al enviar el mensaje.";
+    } finally {
+      boton.disabled = false;
+      boton.textContent = "💖 Enviar felicitación";
+    }
+  });
 });
