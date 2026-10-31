@@ -74,23 +74,41 @@
     <button type="button" id="volverInicio" class="volver oculto">← Volver a elegir</button>
   </main>
 
-  <aside id="panel-musica" class="musica-spotify oculto">
+
+<aside id="panel-musica" class="musica-spotify oculto">
 
     <h3>🎵 Tu banda sonora</h3>
+
     <p>Una playlist especial para ti 💖</p>
-  <div class="spotify-panel">
-    <iframe
-        src="https://open.spotify.com/embed/playlist/0LIcmR8aH9S7fzrkNmgNeS?utm_source=generator"
-        width="100%"
-        height="352"
-        frameborder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy">
-    </iframe>
+
+    <div class="spotify-panel">
+        <iframe
+            src="https://open.spotify.com/embed/playlist/0LIcmR8aH9S7fzrkNmgNeS?utm_source=generator"
+            width="100%"
+            height="352"
+            frameborder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+        </iframe>
+    </div>
 
 </aside>
+```
 
-</div>
-  <footer id="piePagina" class="oculto">Hecho con ❤️ para un día inolvidable</footer>
+## 2. Comprueba que el final del HTML queda así
+
+```html
+    </button>
+  </main>
+
+  <!-- PLAYLIST DE SPOTIFY -->
+  <aside id="panel-musica" class="musica-spotify oculto">
+      <!-- Aquí va el reproductor -->
+  </aside>
+
+  <footer id="piePagina" class="oculto">
+      Hecho con ❤️ para un día inolvidable
+  </footer>
+
 </body>
 </html>
