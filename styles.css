@@ -161,27 +161,75 @@ footer{font-size:12px;color:#a99fc3;margin-top:25px;text-align:center}
     margin-top: 15px;
 }
 
-/* ADAPTACIÓN A MÓVILES */
-@media (max-width: 950px) {
-    .birthday-layout {
-        grid-template-columns: minmax(0, 610px);
-    }
 
     .musica-spotify {
         position: static;
         margin-top: 20px;
     }
+
+
+
+/* ========================================
+   TARJETA CENTRADA + SPOTIFY A LA DERECHA
+======================================== */
+
+.birthday-layout {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
 }
 
-
-/* =====================================
-   ANIMACIONES Y EFECTOS DINÁMICOS
-===================================== */
-
-/* Entrada elegante de la tarjeta */
 .birthday-card {
-    animation: entradaTarjeta 1s ease both;
+    width: min(100%, 610px);
+    margin: 0 auto;
+    position: relative;
 }
+
+/* PLAYLIST A LA DERECHA */
+
+.musica-spotify {
+    position: fixed;
+    left: calc(50% + 335px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 340px;
+    z-index: 5;
+    padding: 22px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 24px;
+    background: rgba(255,255,255,.10);
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,.2);
+}
+
+.musica-spotify:hover {
+    transform: translateY(calc(-50% - 5px));
+}
+
+.spotify-panel iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+}
+
+/* TABLETS Y PANTALLAS PEQUEÑAS */
+
+@media (max-width: 1250px) {
+    .musica-spotify {
+        position: static;
+        transform: none;
+        width: min(100% - 28px, 400px);
+        margin: 30px auto;
+    }
+
+    .musica-spotify:hover {
+        transform: translateY(-5px);
+    }
+}
+
 
 @keyframes entradaTarjeta {
     from {
