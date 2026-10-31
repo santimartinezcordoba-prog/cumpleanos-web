@@ -63,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 abrirSorpresa.addEventListener("click", async () => {
     contenidoSorpresa.classList.remove("oculto");
+    panelMusica.classList.remove("oculto");
 
     lanzarConfeti();
     iniciarCorazones();
