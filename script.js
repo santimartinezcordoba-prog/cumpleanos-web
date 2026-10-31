@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const contenidoSorpresa = document.getElementById("contenido-sorpresa");
   const volverInicio = document.getElementById("volverInicio");
   const piePagina = document.getElementById("piePagina");
-
   const btnBrenda = document.getElementById("btnBrenda");
   const btnInvitado = document.getElementById("btnInvitado");
   const abrirSorpresa = document.getElementById("abrirSorpresa");
@@ -13,9 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const muro = document.getElementById("muroFelicitaciones");
   const galeria = document.getElementById("galeriaVideos");
   const panelMusica = document.getElementById("panel-musica");
-
-contenidoSorpresa.classList.remove("oculto");
-panelMusica.classList.remove("oculto");
+      // Ocultar Spotify al iniciar la página
+    panelMusica.classList.add("oculto");
   const estadoFormulario = document.getElementById("estadoFormulario");
 
   function mostrarModo(modo) {
