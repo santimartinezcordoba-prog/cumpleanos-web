@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formFelicitacion");
   const muro = document.getElementById("muroFelicitaciones");
   const galeria = document.getElementById("galeriaVideos");
+  const panelMusica = document.getElementById("panel-musica");
   const estadoFormulario = document.getElementById("estadoFormulario");
 
   function mostrarModo(modo) {
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     abrirSorpresa.disabled = false;
     abrirSorpresa.textContent = "🎁 Abrir mi sorpresa";
     window.scrollTo({ top: 0, behavior: "smooth" });
+    panelMusica.classList.add("oculto");
   });
 
   function lanzarConfeti() {
@@ -59,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   abrirSorpresa.addEventListener("click", async () => {
     contenidoSorpresa.classList.remove("oculto");
+    panelMusica.classList.remove("oculto");
     abrirSorpresa.disabled = true;
     abrirSorpresa.textContent = "💖 ¡Sorpresa!";
     lanzarConfeti();
