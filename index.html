@@ -13,6 +13,8 @@
   <div class="glow glow-one" aria-hidden="true"></div>
   <div class="glow glow-two" aria-hidden="true"></div>
 
+<div class="birthday-layout">
+
   <main class="birthday-card">
     <section id="seleccion-usuario" class="seleccion-usuario">
       <div class="eyebrow">✦ HOY ES UN DÍA ESPECIAL ✦</div>
@@ -93,11 +95,9 @@
     </div>
 
 </aside>
-```
 
-## 2. Comprueba que el final del HTML queda así
+</div>
 
-```html
     </button>
   </main>
 
@@ -112,35 +112,3 @@
 
 </body>
 </html>
-```
-
-## 3. Comprueba tu JavaScript
-
-Asegúrate de que tienes estas dos partes:
-
-**Al principio, junto a los demás elementos:**
-
-```javascript
-const panelMusica = document.getElementById("panel-musica");
-```
-
-**Dentro del evento de abrir la sorpresa:**
-
-```javascript
-contenidoSorpresa.classList.remove("oculto");
-panelMusica.classList.remove("oculto");
-```
-
-**Dentro del evento de volver al inicio:**
-
-```javascript
-panelMusica.classList.add("oculto");
-```
-
-## 4. Una última comprobación
-
-Tu CSS debe tener la clase `.musica-spotify` con el posicionamiento lateral que configuramos anteriormente.
-
-Guarda los cambios y prueba primero en local. Después súbelos a GitHub.
-
-**Con esto recuperaremos la playlist a la derecha de la tarjeta, sin modificar el diseño original ni el funcionamiento de los mensajes y vídeos.** ❤️

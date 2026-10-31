@@ -432,3 +432,62 @@ button:active {
         transition: none;
     }
 }
+
+/* ========================================
+   DISTRIBUCIÓN TARJETA + SPOTIFY
+======================================== */
+
+.birthday-layout {
+    width: min(100%, 1100px);
+    display: grid;
+    grid-template-columns: minmax(0, 610px) 350px;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin: auto;
+}
+
+.birthday-card {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+.musica-spotify {
+    width: 100%;
+    padding: 22px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 24px;
+    background: rgba(255,255,255,.10);
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,.2);
+}
+
+.musica-spotify h3 {
+    color: #ffe0a0;
+    font-family: Outfit, sans-serif;
+}
+
+.musica-spotify p {
+    color: #e1d9f1;
+    font-size: 13px;
+}
+
+.spotify-panel iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+}
+
+@media (max-width: 1050px) {
+    .birthday-layout {
+        grid-template-columns: minmax(0, 610px);
+        width: 100%;
+    }
+
+    .musica-spotify {
+        max-width: 450px;
+        margin: 25px auto;
+    }
+}
