@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const muro = document.getElementById("muroFelicitaciones");
   const galeria = document.getElementById("galeriaVideos");
   const panelMusica = document.getElementById("panel-musica");
+
+contenidoSorpresa.classList.remove("oculto");
+panelMusica.classList.remove("oculto");
   const estadoFormulario = document.getElementById("estadoFormulario");
 
   function mostrarModo(modo) {

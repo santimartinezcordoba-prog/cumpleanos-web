@@ -5,7 +5,7 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:ce
 #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:10}
 .glow{position:fixed;width:420px;height:420px;border-radius:50%;filter:blur(105px);opacity:.20;pointer-events:none}
 .glow-one{background:#ff54ab;top:-180px;left:-130px}.glow-two{background:#6958fa;right:-150px;bottom:-180px}
-.birthday-card{position:relative;width:min(100%,760px);text-align:center;padding:43px 50px 36px;border:1px solid rgba(255,255,255,.18);border-radius:32px;background:linear-gradient(135deg,rgba(255,255,255,.11),rgba(255,255,255,.035));box-shadow:0 22px 80px rgba(4,0,20,.35),inset 0 1px rgba(255,255,255,.12);backdrop-filter:blur(15px)}
+.birthday-card{position:relative;width:min(100%,610px);text-align:center;padding:43px 50px 36px;border:1px solid rgba(255,255,255,.18);border-radius:32px;background:linear-gradient(135deg,rgba(255,255,255,.11),rgba(255,255,255,.035));box-shadow:0 22px 80px rgba(4,0,20,.35),inset 0 1px rgba(255,255,255,.12);backdrop-filter:blur(15px)}
 .oculto{display:none!important}
 .eyebrow{color:#ead6ff;letter-spacing:3px;font-size:11px;font-weight:800}
 h1{font-family:Outfit,system-ui,sans-serif;font-size:clamp(38px,7vw,62px);font-weight:900;letter-spacing:-2px;line-height:1.08;margin:20px 0}
@@ -56,193 +56,142 @@ footer{font-size:12px;color:#a99fc3;margin-top:25px;text-align:center}
 @keyframes float{50%{transform:translateY(-11px) rotate(4deg)}}@keyframes flicker{to{transform:rotate(13deg) scale(.83)}}@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:600px){body{padding:25px 14px}.birthday-card{padding:34px 20px 28px;border-radius:25px}.balloons{opacity:.5;transform:scale(.68);transform-origin:top right;top:64px;right:8px}.cake{margin-top:42px}.eyebrow{font-size:10px;letter-spacing:1.6px}h1{letter-spacing:-1.5px}.intro{font-size:14px}.opciones-usuario{flex-direction:column;align-items:stretch}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-/* REPRODUCTOR DE SPOTIFY */
 
-.musica-spotify {
-    max-width: 420px;
-    margin: 25px auto 40px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 18px;
-}
 
-.musica-spotify p {
-    color: #ffe0ac;
-    font-size: 13px;
-    font-weight: 600;
-    margin: 0 0 12px;
-}
+/* ==========================================
+   DISTRIBUCIÓN PRINCIPAL
+========================================== */
 
-.musica-spotify iframe {
-    display: block;
+.birthday-layout {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     width: 100%;
-    border: none;
-    border-radius: 12px;
+    min-height: 100vh;
 }
 
-/* DISTRIBUCIÓN PRINCIPAL */
+/* Tarjeta de cumpleaños centrada */
 
-
-/* TARJETA PRINCIPAL: RECUPERAR DISEÑO ORIGINAL */
 .birthday-card {
     position: relative;
-    width: min(100%, 610px);
+    width: min(610px, calc(100% - 30px));
+    max-width: 610px;
     margin: 0 auto;
+    text-align: center;
+
+    animation: entradaTarjeta 1s ease-out both;
 }
 
-/* SPOTIFY A LA DERECHA DE LA TARJETA */
+/* ==========================================
+   REPRODUCTOR SPOTIFY
+========================================== */
+
 .musica-spotify {
     position: fixed;
-    top: 145px;
-    left: calc(50% + 330px);
-    width: 320px;
+
+    /* 30px de separación respecto a la tarjeta */
+    left: calc(50% + 335px);
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 340px;
+    max-width: 340px;
+
     padding: 20px;
 
     border: 1px solid rgba(255,255,255,.18);
-    border-radius: 25px;
+    border-radius: 24px;
 
     background: linear-gradient(
         135deg,
         rgba(255,255,255,.12),
-        rgba(255,255,255,.04)
+        rgba(255,255,255,.05)
     );
+
+    text-align: center;
 
     box-shadow: 0 15px 40px rgba(4,0,20,.25);
     backdrop-filter: blur(15px);
+
     z-index: 5;
 }
+
+/* Título de Spotify */
 
 .musica-spotify h3 {
     color: #ffe0ac;
     font-family: Outfit, sans-serif;
-    text-align: center;
     margin-top: 0;
 }
+
+/* Descripción */
 
 .musica-spotify p {
     color: #e1d9f1;
     font-size: 13px;
-    text-align: center;
+    font-weight: 600;
 }
 
-.musica-spotify iframe {
-    display: block;
-    width: 100%;
-    border-radius: 12px;
-    margin-top: 15px;
-}
-
-/* PANTALLAS PEQUEÑAS */
-@media (max-width: 1100px) {
-    .musica-spotify {
-        position: static;
-        width: min(100%, 610px);
-        margin: 25px auto;
-    }
-}
-
-.musica-spotify h3 {
-    color: #ffe0ac;
-    font-family: Outfit, sans-serif;
-    text-align: center;
-    margin-top: 0;
-}
-
-.musica-spotify p {
-    color: #e1d9f1;
-    font-size: 13px;
-    text-align: center;
-}
-
-.musica-spotify iframe {
-    display: block;
-    border-radius: 12px;
-    margin-top: 15px;
-}
-
-
-    .musica-spotify {
-        position: static;
-        margin-top: 20px;
-    }
-
-
-
-/* ========================================
-   TARJETA CENTRADA + SPOTIFY A LA DERECHA
-======================================== */
-
-.birthday-layout {
-    display: block;
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    margin: 0 auto;
-}
-
-.birthday-card {
-    width: min(100%, 610px);
-    margin: 0 auto;
-    position: relative;
-}
-
-/* PLAYLIST A LA DERECHA */
-
-.musica-spotify {
-    position: fixed;
-    left: calc(50% + 335px);
-    top: 50%;
-    transform: translateY(-50%);
-    width: 340px;
-    z-index: 5;
-    padding: 22px;
-    border: 1px solid rgba(255,255,255,.18);
-    border-radius: 24px;
-    background: rgba(255,255,255,.10);
-    text-align: center;
-    box-shadow: 0 15px 40px rgba(0,0,0,.2);
-}
-
-.musica-spotify:hover {
-    transform: translateY(calc(-50% - 5px));
-}
+/* Reproductor */
 
 .spotify-panel iframe {
     display: block;
     width: 100%;
-    border: 0;
+    border: none;
     border-radius: 12px;
+    margin-top: 15px;
 }
 
-/* TABLETS Y PANTALLAS PEQUEÑAS */
+/* Movimiento discreto */
 
-@media (max-width: 1250px) {
-    .musica-spotify {
-        position: static;
-        transform: none;
-        width: min(100% - 28px, 400px);
-        margin: 30px auto;
+.musica-spotify {
+    transition: box-shadow .35s ease,
+                border-color .35s ease;
+}
+
+.musica-spotify:hover {
+    box-shadow: 0 18px 45px rgba(255,120,186,.20);
+    border-color: rgba(255,255,255,.3);
+}
+
+/* Aparición de Spotify */
+
+.musica-spotify:not(.oculto) {
+    animation: entradaSpotify .8s ease both;
+}
+
+@keyframes entradaSpotify {
+    from {
+        opacity: 0;
+        transform: translate(25px, -50%);
     }
 
-    .musica-spotify:hover {
-        transform: translateY(-5px);
+    to {
+        opacity: 1;
+        transform: translate(0, -50%);
     }
 }
 
+/* ==========================================
+   ANIMACIONES
+========================================== */
 
 @keyframes entradaTarjeta {
     from {
         opacity: 0;
-        transform: translateY(35px) scale(.97);
+        transform: translateY(25px) scale(.97);
     }
+
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
 }
 
-/* Movimiento suave de los globos */
+/* Globos */
+
 .balloon {
     animation: globosFlotando 3s ease-in-out infinite;
 }
@@ -251,77 +200,46 @@ footer{font-size:12px;color:#a99fc3;margin-top:25px;text-align:center}
     0%, 100% {
         transform: translateY(0) rotate(-3deg);
     }
+
     50% {
-        transform: translateY(-17px) rotate(5deg);
+        transform: translateY(-14px) rotate(5deg);
     }
 }
 
-/* Efecto de los botones */
-button {
-    transition: transform .25s ease,
-                box-shadow .25s ease,
-                filter .25s ease;
+/* Tarjetas de vídeos */
+
+.tarjeta-video {
+    transition: transform .35s ease,
+                box-shadow .35s ease;
 }
 
-button:hover {
-    transform: translateY(-4px) scale(1.03);
-    filter: brightness(1.12);
+.tarjeta-video:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,0,0,.25);
 }
 
-button:active {
-    transform: scale(.95);
-}
+/* Aparición de mensajes y vídeos */
 
-/* Entrada de Spotify */
-.musica-spotify:not(.oculto) {
-    animation: entradaSpotify .8s ease both;
-}
-
-@keyframes entradaSpotify {
-    from {
-        opacity: 0;
-        transform: translateX(35px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Iluminación de Spotify */
-.musica-spotify:not(.oculto) {
-    animation:
-        entradaSpotify .8s ease both,
-        brilloSpotify 4s ease-in-out 1s infinite;
-}
-
-@keyframes brilloSpotify {
-    0%, 100% {
-        box-shadow: 0 15px 40px rgba(4,0,20,.25);
-    }
-    50% {
-        box-shadow: 0 15px 45px rgba(255,120,186,.24);
-    }
-}
-
-/* Aparición progresiva de mensajes y vídeos */
-.revelar {
+.revelar-dinamico {
     opacity: 0;
     transform: translateY(25px);
-    transition: opacity .7s ease, transform .7s ease;
+    transition: opacity .8s ease,
+                transform .8s ease;
 }
 
-.revelar.visible {
+.revelar-dinamico.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
 /* Corazones flotantes */
+
 .corazon-flotante {
     position: fixed;
     bottom: -40px;
     z-index: 9;
     pointer-events: none;
+    user-select: none;
     animation: subirCorazon 5s ease-in forwards;
     filter: drop-shadow(0 0 7px rgba(255,105,180,.4));
 }
@@ -331,16 +249,19 @@ button:active {
         transform: translateY(0) rotate(0deg) scale(.7);
         opacity: 0;
     }
+
     15% {
         opacity: .9;
     }
+
     100% {
         transform: translateY(-110vh) rotate(35deg) scale(1.3);
         opacity: 0;
     }
 }
 
-/* Efecto al abrir la sorpresa */
+/* Contenido de la sorpresa */
+
 #contenido-sorpresa {
     animation: aparecerSorpresa .9s ease both;
 }
@@ -350,128 +271,88 @@ button:active {
         opacity: 0;
         transform: translateY(25px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Respeto a usuarios que prefieren menos movimiento */
+/* ==========================================
+   TABLETS Y MÓVILES
+========================================== */
+
+@media (max-width: 1400px) {
+
+    .birthday-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .birthday-card {
+        width: min(610px, calc(100% - 30px));
+        margin: 0 auto;
+    }
+
+    .musica-spotify {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+
+        width: min(400px, calc(100% - 30px));
+        max-width: 400px;
+
+        margin: 30px auto;
+    }
+
+    .musica-spotify:not(.oculto) {
+        animation: entradaSpotifyMovil .8s ease both;
+    }
+
+    @keyframes entradaSpotifyMovil {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+@media (max-width: 600px) {
+
+    .birthday-card {
+        padding: 34px 20px 28px;
+        border-radius: 25px;
+    }
+
+    .musica-spotify {
+        padding: 15px;
+    }
+
+    .musica-spotify iframe {
+        height: 352px;
+    }
+}
+
+/* ==========================================
+   ACCESIBILIDAD
+========================================== */
+
 @media (prefers-reduced-motion: reduce) {
+
     .birthday-card,
     .balloon,
     .musica-spotify,
     .corazon-flotante,
-    #contenido-sorpresa {
+    #contenido-sorpresa,
+    .tarjeta-video {
         animation: none !important;
-    }
-
-    .revelar {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-}
-/* ========================================
-   ANIMACIONES DINÁMICAS
-======================================== */
-
-/* Entrada de la tarjeta */
-.birthday-card {
-    animation: entradaTarjeta 1s ease-out both;
-}
-
-@keyframes entradaTarjeta {
-    from {
-        opacity: 0;
-        transform: translateY(35px) scale(0.97);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Corazones flotantes */
-.corazon-flotante {
-    position: fixed;
-    bottom: -40px;
-    z-index: 9999;
-    pointer-events: none;
-    user-select: none;
-}
-
-/* Revelación progresiva */
-.revelar-dinamico {
-    opacity: 0;
-    transform: translateY(25px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.revelar-dinamico.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Efecto especial al pasar por los botones */
-button {
-    transition: transform 0.3s ease,
-                box-shadow 0.3s ease,
-                filter 0.3s ease;
-}
-
-button:hover {
-    transform: translateY(-4px) scale(1.03);
-    filter: brightness(1.08);
-}
-
-button:active {
-    transform: scale(0.96);
-}
-
-/* Animación de las tarjetas de vídeos */
-.tarjeta-video {
-    transition: transform 0.35s ease,
-                box-shadow 0.35s ease;
-}
-
-.tarjeta-video:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-}
-
-/* Movimiento de la playlist */
-.spotify-panel {
-    animation: entradaSpotify 1.2s ease-out both;
-    transition: transform 0.35s ease,
-                box-shadow 0.35s ease;
-}
-
-.spotify-panel:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(255, 120, 186, 0.2);
-}
-
-@keyframes entradaSpotify {
-    from {
-        opacity: 0;
-        transform: translateX(35px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Respetar usuarios que prefieren menos movimiento */
-@media (prefers-reduced-motion: reduce) {
-    .birthday-card,
-    .spotify-panel {
-        animation: none;
-    }
-
-    .corazon-flotante {
-        display: none;
+        transition: none !important;
     }
 
     .revelar-dinamico {
@@ -479,121 +360,8 @@ button:active {
         transform: none;
         transition: none;
     }
-}
 
-/* ========================================
-   DISTRIBUCIÓN TARJETA + SPOTIFY
-======================================== */
-
-.birthday-layout {
-    width: min(100%, 1100px);
-    display: grid;
-    grid-template-columns: minmax(0, 610px) 350px;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    margin: auto;
-}
-
-.birthday-card {
-    width: 100%;
-    min-width: 0;
-    margin: 0;
-}
-
-.musica-spotify {
-    width: 100%;
-    padding: 22px;
-    border: 1px solid rgba(255,255,255,.18);
-    border-radius: 24px;
-    background: rgba(255,255,255,.10);
-    text-align: center;
-    box-shadow: 0 15px 40px rgba(0,0,0,.2);
-}
-
-.musica-spotify h3 {
-    color: #ffe0a0;
-    font-family: Outfit, sans-serif;
-}
-
-.musica-spotify p {
-    color: #e1d9f1;
-    font-size: 13px;
-}
-
-.spotify-panel iframe {
-    display: block;
-    width: 100%;
-    border: 0;
-    border-radius: 12px;
-}
-
-@media (max-width: 1050px) {
-    .birthday-layout {
-        grid-template-columns: minmax(0, 610px);
-        width: 100%;
-    }
-
-    .musica-spotify {
-        max-width: 450px;
-        margin: 25px auto;
-    }
-}
-
-
-/* =====================================
-   CORRECCIÓN DEFINITIVA DE POSICIONES
-===================================== */
-
-/* Tarjeta de cumpleaños centrada en la pantalla */
-main.birthday-card {
-    position: relative !important;
-    left: 50vw !important;
-    transform: translateX(-50%) !important;
-
-    width: min(610px, calc(100vw - 40px)) !important;
-    max-width: 610px !important;
-
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-
-/* Spotify a la derecha de la tarjeta */
-#panel-musica {
-    position: fixed !important;
-
-    left: calc(50vw + 335px) !important;
-    top: 50vh !important;
-
-    transform: translateY(-50%) !important;
-
-    width: 360px !important;
-    max-width: 360px !important;
-
-    margin: 0 !important;
-    z-index: 100 !important;
-}
-
-/* Animación discreta */
-#panel-musica:hover {
-    transform: translateY(calc(-50% - 4px)) !important;
-}
-
-/* Pantallas pequeñas: Spotify debajo */
-@media (max-width: 1400px) {
-    #panel-musica {
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        transform: none !important;
-
-        width: min(400px, calc(100% - 30px)) !important;
-        max-width: 400px !important;
-
-        margin: 30px auto !important;
-    }
-
-    #panel-musica:hover {
-        transform: translateY(-4px) !important;
+    .corazon-flotante {
+        display: none;
     }
 }
