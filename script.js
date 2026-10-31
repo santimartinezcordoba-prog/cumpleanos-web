@@ -12,9 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const muro = document.getElementById("muroFelicitaciones");
   const galeria = document.getElementById("galeriaVideos");
   const panelMusica = document.getElementById("panel-musica");
-      // Ocultar Spotify al iniciar la página
-    panelMusica.classList.add("oculto");
+  const panelPersonaje = document.getElementById("panel-personaje");
   const estadoFormulario = document.getElementById("estadoFormulario");
+
+// Ocultar Spotify y Miss Fortune al iniciar
+panelMusica.classList.add("oculto");
+panelPersonaje.classList.add("oculto");
+
 
   function mostrarModo(modo) {
     seleccion.classList.add("oculto");
@@ -45,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     abrirSorpresa.textContent = "🎁 Abrir mi sorpresa";
     window.scrollTo({ top: 0, behavior: "smooth" });
     panelMusica.classList.add("oculto");
+    panelPersonaje.classList.add("oculto");
   });
 
   function lanzarConfeti() {
@@ -65,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 abrirSorpresa.addEventListener("click", async () => {
     contenidoSorpresa.classList.remove("oculto");
     panelMusica.classList.remove("oculto");
+    panelPersonaje.classList.remove("oculto");
 
     lanzarConfeti();
     iniciarCorazones();
