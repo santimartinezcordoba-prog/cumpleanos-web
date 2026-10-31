@@ -539,3 +539,61 @@ button:active {
         margin: 25px auto;
     }
 }
+
+
+/* =====================================
+   CORRECCIÓN DEFINITIVA DE POSICIONES
+===================================== */
+
+/* Tarjeta de cumpleaños centrada en la pantalla */
+main.birthday-card {
+    position: relative !important;
+    left: 50vw !important;
+    transform: translateX(-50%) !important;
+
+    width: min(610px, calc(100vw - 40px)) !important;
+    max-width: 610px !important;
+
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Spotify a la derecha de la tarjeta */
+#panel-musica {
+    position: fixed !important;
+
+    left: calc(50vw + 335px) !important;
+    top: 50vh !important;
+
+    transform: translateY(-50%) !important;
+
+    width: 360px !important;
+    max-width: 360px !important;
+
+    margin: 0 !important;
+    z-index: 100 !important;
+}
+
+/* Animación discreta */
+#panel-musica:hover {
+    transform: translateY(calc(-50% - 4px)) !important;
+}
+
+/* Pantallas pequeñas: Spotify debajo */
+@media (max-width: 1400px) {
+    #panel-musica {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+
+        width: min(400px, calc(100% - 30px)) !important;
+        max-width: 400px !important;
+
+        margin: 30px auto !important;
+    }
+
+    #panel-musica:hover {
+        transform: translateY(-4px) !important;
+    }
+}
