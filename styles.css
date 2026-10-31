@@ -172,3 +172,263 @@ footer{font-size:12px;color:#a99fc3;margin-top:25px;text-align:center}
         margin-top: 20px;
     }
 }
+
+
+/* =====================================
+   ANIMACIONES Y EFECTOS DINÁMICOS
+===================================== */
+
+/* Entrada elegante de la tarjeta */
+.birthday-card {
+    animation: entradaTarjeta 1s ease both;
+}
+
+@keyframes entradaTarjeta {
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Movimiento suave de los globos */
+.balloon {
+    animation: globosFlotando 3s ease-in-out infinite;
+}
+
+@keyframes globosFlotando {
+    0%, 100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+    50% {
+        transform: translateY(-17px) rotate(5deg);
+    }
+}
+
+/* Efecto de los botones */
+button {
+    transition: transform .25s ease,
+                box-shadow .25s ease,
+                filter .25s ease;
+}
+
+button:hover {
+    transform: translateY(-4px) scale(1.03);
+    filter: brightness(1.12);
+}
+
+button:active {
+    transform: scale(.95);
+}
+
+/* Entrada de Spotify */
+.musica-spotify:not(.oculto) {
+    animation: entradaSpotify .8s ease both;
+}
+
+@keyframes entradaSpotify {
+    from {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Iluminación de Spotify */
+.musica-spotify:not(.oculto) {
+    animation:
+        entradaSpotify .8s ease both,
+        brilloSpotify 4s ease-in-out 1s infinite;
+}
+
+@keyframes brilloSpotify {
+    0%, 100% {
+        box-shadow: 0 15px 40px rgba(4,0,20,.25);
+    }
+    50% {
+        box-shadow: 0 15px 45px rgba(255,120,186,.24);
+    }
+}
+
+/* Aparición progresiva de mensajes y vídeos */
+.revelar {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity .7s ease, transform .7s ease;
+}
+
+.revelar.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Corazones flotantes */
+.corazon-flotante {
+    position: fixed;
+    bottom: -40px;
+    z-index: 9;
+    pointer-events: none;
+    animation: subirCorazon 5s ease-in forwards;
+    filter: drop-shadow(0 0 7px rgba(255,105,180,.4));
+}
+
+@keyframes subirCorazon {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(.7);
+        opacity: 0;
+    }
+    15% {
+        opacity: .9;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(35deg) scale(1.3);
+        opacity: 0;
+    }
+}
+
+/* Efecto al abrir la sorpresa */
+#contenido-sorpresa {
+    animation: aparecerSorpresa .9s ease both;
+}
+
+@keyframes aparecerSorpresa {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Respeto a usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+    .birthday-card,
+    .balloon,
+    .musica-spotify,
+    .corazon-flotante,
+    #contenido-sorpresa {
+        animation: none !important;
+    }
+
+    .revelar {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+/* ========================================
+   ANIMACIONES DINÁMICAS
+======================================== */
+
+/* Entrada de la tarjeta */
+.birthday-card {
+    animation: entradaTarjeta 1s ease-out both;
+}
+
+@keyframes entradaTarjeta {
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Corazones flotantes */
+.corazon-flotante {
+    position: fixed;
+    bottom: -40px;
+    z-index: 9999;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Revelación progresiva */
+.revelar-dinamico {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.revelar-dinamico.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Efecto especial al pasar por los botones */
+button {
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                filter 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-4px) scale(1.03);
+    filter: brightness(1.08);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+/* Animación de las tarjetas de vídeos */
+.tarjeta-video {
+    transition: transform 0.35s ease,
+                box-shadow 0.35s ease;
+}
+
+.tarjeta-video:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* Movimiento de la playlist */
+.spotify-panel {
+    animation: entradaSpotify 1.2s ease-out both;
+    transition: transform 0.35s ease,
+                box-shadow 0.35s ease;
+}
+
+.spotify-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(255, 120, 186, 0.2);
+}
+
+@keyframes entradaSpotify {
+    from {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Respetar usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+    .birthday-card,
+    .spotify-panel {
+        animation: none;
+    }
+
+    .corazon-flotante {
+        display: none;
+    }
+
+    .revelar-dinamico {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}

@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   btnInvitado.addEventListener("click", () => mostrarModo("invitado"));
 
   volverInicio.addEventListener("click", () => {
+    detenerCorazones();
     zonaBrenda.classList.add("oculto");
     zonaInvitado.classList.add("oculto");
     contenidoSorpresa.classList.add("oculto");
@@ -59,15 +60,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  abrirSorpresa.addEventListener("click", async () => {
+
+abrirSorpresa.addEventListener("click", async () => {
     contenidoSorpresa.classList.remove("oculto");
-    panelMusica.classList.remove("oculto");
-    abrirSorpresa.disabled = true;
-    abrirSorpresa.textContent = "💖 ¡Sorpresa!";
+
     lanzarConfeti();
-    await Promise.all([cargarFelicitaciones(), cargarVideos()]);
-    contenidoSorpresa.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+    iniciarCorazones();
+
+    abrirSorpresa.textContent = "💖 ¡Sorpresa!";
+    abrirSorpresa.disabled = true;
+
+    await Promise.all([
+        cargarFelicitaciones(),
+        cargarVideos()
+    ]);
+
+    activarRevelaciones();
+
+    contenidoSorpresa.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+});
+
 
   async function cargarFelicitaciones() {
     muro.textContent = "💌 Cargando felicitaciones...";
@@ -171,4 +186,89 @@ document.addEventListener("DOMContentLoaded", () => {
       boton.textContent = "💖 Enviar felicitación";
     }
   });
+  // ========================================
+// 8. ANIMACIONES DINÁMICAS
+// ========================================
+
+// Crear corazones flotantes
+function crearCorazon() {
+    const corazon = document.createElement("span");
+
+    const corazones = ["💖", "💕", "💗", "❤️", "✨"];
+
+    corazon.textContent =
+        corazones[Math.floor(Math.random() * corazones.length)];
+
+    corazon.className = "corazon-flotante";
+
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.fontSize = (Math.random() * 15 + 15) + "px";
+
+    document.body.appendChild(corazon);
+
+    const duracion = Math.random() * 3000 + 4000;
+
+    const animacion = corazon.animate([
+        {
+            transform: "translateY(0) rotate(0deg)",
+            opacity: 0
+        },
+        {
+            opacity: 1,
+            offset: 0.15
+        },
+        {
+            transform: "translateY(-110vh) rotate(360deg)",
+            opacity: 0
+        }
+    ], {
+        duration: duracion,
+        easing: "linear"
+    });
+
+    animacion.onfinish = () => corazon.remove();
+}
+
+
+// Iniciar lluvia de corazones
+let intervaloCorazones;
+
+function iniciarCorazones() {
+    detenerCorazones();
+
+    crearCorazon();
+
+    intervaloCorazones = setInterval(() => {
+        crearCorazon();
+    }, 500);
+}
+
+
+// Detener lluvia de corazones
+function detenerCorazones() {
+    clearInterval(intervaloCorazones);
+
+    document.querySelectorAll(".corazon-flotante")
+        .forEach(corazon => corazon.remove());
+}
+
+
+// Revelar mensajes y vídeos progresivamente
+function activarRevelaciones() {
+    const elementos = document.querySelectorAll(
+        "#contenido-sorpresa h2, " +
+        "#muroFelicitaciones, " +
+        "#galeriaVideos, " +
+        ".tarjeta-video, " +
+        ".felicitacion"
+    );
+
+    elementos.forEach((elemento, indice) => {
+        elemento.classList.add("revelar-dinamico");
+
+        setTimeout(() => {
+            elemento.classList.add("visible");
+        }, indice * 180);
+    });
+}
 });
