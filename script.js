@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // CONEXIÓN CON SUPABASE
+  const SUPABASE_URL = "https://ckcfqaxqexyiybqsldow.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_odFbdmCLZ1zryWfYS4GJFA_yWJS3nxc";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
   // Elementos principales
   const seleccion = document.getElementById("seleccion-usuario");
   const zonaBrenda = document.getElementById("zona-brenda");
@@ -145,41 +154,45 @@ document.addEventListener("DOMContentLoaded", () => {
     muro.textContent = "💌 Cargando felicitaciones...";
 
     try {
-      const respuesta = await fetch("/api/felicitaciones", { cache: "no-store" });
-      if (!respuesta.ok) throw new Error("Error al cargar los mensajes");
+        const { data: felicitaciones, error } = await supabaseClient
+            .from("felicitaciones")
+            .select("nombre, mensaje")
+            .order("id", { ascending: false });
 
-      const felicitaciones = await respuesta.json();
-      muro.replaceChildren();
+        if (error) throw error;
 
-      if (!Array.isArray(felicitaciones) || felicitaciones.length === 0) {
-        muro.textContent = "Todavía no hay felicitaciones. ¡Seguro que pronto llegarán! 💖";
-        return;
-      }
+        muro.replaceChildren();
 
-      felicitaciones.forEach((felicitacion) => {
-        const tarjeta = document.createElement("article");
-        tarjeta.className = "felicitacion";
+        if (!felicitaciones || felicitaciones.length === 0) {
+            muro.textContent = "Todavía no hay felicitaciones. ¡Seguro que pronto llegarán! 💖";
+            return;
+        }
 
-        const nombre = document.createElement("h3");
-        nombre.textContent = `💌 ${felicitacion.nombre || "Alguien especial"}`;
+        felicitaciones.forEach((f) => {
+            const tarjeta = document.createElement("article");
+            tarjeta.className = "felicitacion";
 
-        const mensaje = document.createElement("p");
-        mensaje.textContent = felicitacion.mensaje || "";
+            const nombre = document.createElement("h3");
+            nombre.textContent = `💌 ${f.nombre || "Alguien especial"}`;
 
-        tarjeta.append(nombre, mensaje);
-        muro.appendChild(tarjeta);
-      });
+            const mensaje = document.createElement("p");
+            mensaje.textContent = f.mensaje || "";
+
+            tarjeta.append(nombre, mensaje);
+            muro.appendChild(tarjeta);
+        });
+
     } catch (error) {
-      console.error("Error al cargar felicitaciones:", error);
-      muro.textContent = "No se pudieron cargar las felicitaciones. Inténtalo más tarde.";
+        console.error("Error al cargar felicitaciones:", error);
+        muro.textContent = "No se pudieron cargar las felicitaciones.";
     }
-  }
+}
 
   async function cargarVideos() {
     galeria.textContent = "🎬 Cargando vídeos...";
 
     try {
-      const respuesta = await fetch("/videos.json", { cache: "no-store" });
+      const respuesta = await fetch("./videos.json", { cache: "no-store" });
       if (!respuesta.ok) throw new Error("No se pudo encontrar videos.json");
 
       const videos = await respuesta.json();
@@ -225,7 +238,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  form.addEventListener("submit", async (evento) => {
+  
+form.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
     const nombre = document.getElementById("nombre").value.trim();
@@ -233,42 +247,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const boton = form.querySelector('button[type="submit"]');
 
     if (!nombre || !mensaje) {
-      estadoFormulario.textContent = "Escribe tu nombre y tu felicitación ❤️";
-      return;
+        estadoFormulario.textContent = "Escribe tu nombre y tu felicitación ❤️";
+        return;
     }
-
-    const datos = new FormData();
-    datos.append("nombre", nombre);
-    datos.append("mensaje", mensaje);
 
     boton.disabled = true;
     boton.textContent = "💌 Enviando...";
     estadoFormulario.textContent = "";
 
     try {
-      const respuesta = await fetch("/api/felicitaciones", {
-        method: "POST",
-        body: datos
-      });
+        const { error } = await supabaseClient
+            .from("felicitaciones")
+            .insert([{ nombre, mensaje }]);
 
-      const resultado = await respuesta.json().catch(() => ({}));
-      if (!respuesta.ok) {
-        throw new Error(resultado.error || "No se pudo enviar la felicitación.");
-      }
+        if (error) throw error;
 
-      form.reset();
-      estadoFormulario.textContent =
-        "¡Tu felicitación se ha enviado! Brenda podrá verla al abrir su sorpresa. 💖";
-      lanzarConfeti();
+        form.reset();
+
+        estadoFormulario.textContent =
+            "¡Tu felicitación se ha enviado! Brenda podrá verla al abrir su sorpresa. 💖";
+
+        lanzarConfeti();
+
     } catch (error) {
-      console.error("Error al enviar felicitación:", error);
-      estadoFormulario.textContent =
-        error.message || "Ha ocurrido un error al enviar el mensaje.";
+        console.error("Error al enviar felicitación:", error);
+
+        estadoFormulario.textContent =
+            "No se pudo enviar la felicitación. Inténtalo de nuevo.";
     } finally {
-      boton.disabled = false;
-      boton.textContent = "💖 Enviar felicitación";
+        boton.disabled = false;
+        boton.textContent = "💖 Enviar felicitación";
     }
-  });
+});
 
   // Animación de corazones flotantes
   let intervaloCorazones = null;
