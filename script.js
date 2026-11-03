@@ -37,8 +37,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const abrirSorpresa = document.getElementById("abrirSorpresa");
     const zonaCartas = document.getElementById("zona-cartas");
     const muro = document.getElementById("muroFelicitaciones");
-    const siguienteCarta = document.getElementById("siguienteCarta");
     const abrirSorpresaFinal = document.getElementById("abrirSorpresaFinal");
+
+    const cartaAnterior = document.getElementById("cartaAnterior");
+    const cartaSiguiente = document.getElementById("cartaSiguiente");
+    // Ventana de las cartas
+    const modalCarta = document.getElementById("modalCarta");
+    const cerrarCarta = document.getElementById("cerrarCarta");
+    const numeroCarta = document.getElementById("numeroCarta");
+    const nombreCarta = document.getElementById("nombreCarta");
+    const mensajeCarta = document.getElementById("mensajeCarta");
 
     const zonaFinal = document.getElementById("zona-final");
     const galeria = document.getElementById("galeriaVideos");
@@ -50,15 +58,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const panelPersonaje = document.getElementById("panel-personaje");
 
     // Comprobar que el HTML y el JS coinciden.
-    const elementos = {
-        seleccion, accesoBrenda, zonaBrenda, zonaInvitado,
-        volverInicio, piePagina, btnBrenda, btnInvitado,
-        formCodigo, codigoBrenda, estadoCodigo,
-        btnVerificarCodigo, abrirSorpresa, zonaCartas,
-        muro, siguienteCarta, abrirSorpresaFinal,
-        zonaFinal, galeria, form, estadoFormulario,
-        panelMusica, panelPersonaje
-    };
+const elementos = {
+    seleccion, accesoBrenda, zonaBrenda, zonaInvitado,
+    volverInicio, piePagina, btnBrenda, btnInvitado,
+    formCodigo, codigoBrenda, estadoCodigo,
+    btnVerificarCodigo, abrirSorpresa, zonaCartas,
+    muro, abrirSorpresaFinal,
+    modalCarta, cerrarCarta, numeroCarta,
+    nombreCarta, mensajeCarta,
+    zonaFinal, galeria, form, estadoFormulario,
+    panelMusica, panelPersonaje,
+    cartaAnterior,cartaSiguiente,
+};
 
     const faltante = Object.entries(elementos)
         .find(([, elemento]) => !elemento);
@@ -73,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
 
     let felicitacionesPrivadas = [];
-    let indiceCarta = 0;
     let accesoAutorizado = false;
     let videosCargados = false;
 
@@ -135,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
         abrirSorpresa.disabled = false;
         abrirSorpresa.textContent = "💌 Descubrir tus cartas";
 
-        siguienteCarta.classList.add("oculto");
+        cerrarModalCarta();
         abrirSorpresaFinal.classList.add("oculto");
 
         mostrarPantalla(seleccion);
@@ -214,82 +224,299 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    
     // ==========================================
-    // 6. ABRIR LAS CARTAS
+    // 6. SISTEMA DE CARTAS
     // ==========================================
 
+    indiceCartaActual = 0;
+
+    modalCarta.classList.add("oculto");
+
+    document.body.classList.remove("modal-abierto");
+
+    muro.classList.add("oculto");
+
+    abrirSorpresaFinal.classList.add("oculto");
+
+    // Al descubrir las cartas, aparece directamente la primera.
     abrirSorpresa.addEventListener("click", () => {
 
         if (!accesoAutorizado) return;
 
         zonaCartas.classList.remove("oculto");
+
         abrirSorpresa.disabled = true;
         abrirSorpresa.textContent = "💖 Tus cartas";
 
-        indiceCarta = 0;
-
-        mostrarCarta();
+        muro.classList.add("oculto");
+        abrirSorpresaFinal.classList.add("oculto");
 
         zonaCartas.scrollIntoView({
             behavior: "smooth",
             block: "start"
         });
+
+        if (felicitacionesPrivadas.length === 0) {
+
+            muro.classList.remove("oculto");
+
+            muro.textContent =
+                "Todavía no hay felicitaciones. ¡Seguro que pronto llegarán! 💖";
+
+            abrirSorpresaFinal.classList.remove("oculto");
+
+            return;
+        }
+
+        indiceCartaActual = 0;
+
+        mostrarCarta(0);
     });
 
-    function mostrarCarta() {
+
+    // Mostrar una carta concreta
+    function mostrarCarta(indice) {
+
+        if (!accesoAutorizado) return;
+
+        if (
+            indice < 0 ||
+            indice >= felicitacionesPrivadas.length
+        ) return;
+
+        indiceCartaActual = indice;
+
+        const f = felicitacionesPrivadas[indice];
+
+        numeroCarta.textContent =
+            `CARTA ${indice + 1} DE ${felicitacionesPrivadas.length}`;
+
+        nombreCarta.textContent =
+            `💌 ${f.nombre || "Alguien especial"}`;
+
+        mensajeCarta.textContent =
+            f.mensaje || "";
+
+        // Mostrar ventana
+        modalCarta.classList.remove("oculto");
+
+        document.body.classList.add("modal-abierto");
+
+        // Botón anterior
+        cartaAnterior.disabled = indice === 0;
+
+        // Texto del botón siguiente
+        if (indice === felicitacionesPrivadas.length - 1) {
+
+            cartaSiguiente.textContent =
+                "Ver todas las cartas ✨";
+
+        } else {
+
+            cartaSiguiente.textContent =
+                "Siguiente carta →";
+
+        }
+    }
+
+
+    // Carta anterior
+    cartaAnterior.addEventListener("click", () => {
+
+        if (indiceCartaActual > 0) {
+
+            mostrarCarta(indiceCartaActual - 1);
+
+        }
+
+    });
+
+
+    // Siguiente carta o terminar la lectura
+    cartaSiguiente.addEventListener("click", () => {
+
+        if (
+            indiceCartaActual <
+            felicitacionesPrivadas.length - 1
+        ) {
+
+            mostrarCarta(indiceCartaActual + 1);
+
+        } else {
+
+            mostrarColeccionCartas();
+
+        }
+
+    });
+
+
+    // Crear la colección de sobres
+    function renderizarColeccionCartas() {
 
         muro.replaceChildren();
 
         if (felicitacionesPrivadas.length === 0) {
-            muro.textContent =
-                "Todavía no hay felicitaciones. ¡Seguro que pronto llegarán! 💖";
 
-            siguienteCarta.classList.add("oculto");
-            abrirSorpresaFinal.classList.remove("oculto");
+            muro.textContent =
+                "Todavía no hay felicitaciones. 💖";
+
             return;
         }
 
-        const f = felicitacionesPrivadas[indiceCarta];
+        felicitacionesPrivadas.forEach((f, index) => {
 
-        const tarjeta = document.createElement("article");
-        tarjeta.className = "felicitacion";
-        tarjeta.id = "cartaActual";
+            const sobre = document.createElement("button");
 
-        const numero = document.createElement("p");
-        numero.textContent =
-            `✉️ Carta ${indiceCarta + 1} de ${felicitacionesPrivadas.length}`;
+            sobre.type = "button";
+            sobre.className = "sobre-carta";
 
-        const nombre = document.createElement("h3");
-        nombre.textContent = `💌 ${f.nombre || "Alguien especial"}`;
+            const icono = document.createElement("span");
+            icono.className = "icono-sobre";
+            icono.textContent = "💌";
 
-        const mensaje = document.createElement("p");
-        mensaje.textContent = f.mensaje || "";
+            const titulo = document.createElement("strong");
+            titulo.textContent = "Una carta para ti";
 
-        tarjeta.append(numero, nombre, mensaje);
-        muro.appendChild(tarjeta);
+            const remitente = document.createElement("span");
 
-        tarjeta.classList.add("revelar-dinamico");
+            remitente.textContent =
+                `De: ${f.nombre || "Alguien especial"}`;
 
-        requestAnimationFrame(() => {
-            tarjeta.classList.add("visible");
+            const accion = document.createElement("span");
+            accion.className = "abrir-sobre-texto";
+            accion.textContent = "Pulsa para abrir ✨";
+
+            sobre.append(
+                icono,
+                titulo,
+                remitente,
+                accion
+            );
+
+            // Abrir cualquier carta de la colección
+            sobre.addEventListener("click", () => {
+
+                mostrarCarta(index);
+
+            });
+
+            muro.appendChild(sobre);
+
         });
 
-        if (indiceCarta < felicitacionesPrivadas.length - 1) {
-            siguienteCarta.classList.remove("oculto");
-            abrirSorpresaFinal.classList.add("oculto");
-        } else {
-            siguienteCarta.classList.add("oculto");
-            abrirSorpresaFinal.classList.remove("oculto");
+    }
+
+
+    // Mostrar todas las cartas después de la lectura
+    function mostrarColeccionCartas() {
+
+        modalCarta.classList.add("oculto");
+
+        document.body.classList.remove("modal-abierto");
+
+        renderizarColeccionCartas();
+
+        muro.classList.remove("oculto");
+
+        abrirSorpresaFinal.classList.remove("oculto");
+
+    }
+
+
+    // Cerrar la carta con la X
+    cerrarCarta.addEventListener("click", () => {
+
+        mostrarColeccionCartas();
+
+    });
+
+
+    // Cerrar pulsando fuera de la carta
+    modalCarta.addEventListener("click", (evento) => {
+
+        if (evento.target === modalCarta) {
+
+            mostrarColeccionCartas();
+
+        }
+
+    });
+
+
+    // Cerrar pulsando Escape
+    document.addEventListener("keydown", (evento) => {
+
+        if (
+            evento.key === "Escape" &&
+            !modalCarta.classList.contains("oculto")
+        ) {
+
+            mostrarColeccionCartas();
+
+        }
+
+    });
+
+    // Abrir una carta en el centro de la pantalla
+    function abrirCarta(f, index, origen) {
+
+        if (!accesoAutorizado) return;
+
+        ultimaCartaAbierta = origen;
+
+        numeroCarta.textContent =
+            `CARTA ${index + 1} DE ${felicitacionesPrivadas.length}`;
+
+        nombreCarta.textContent =
+            `💌 ${f.nombre || "Alguien especial"}`;
+
+        mensajeCarta.textContent =
+            f.mensaje || "";
+
+        modalCarta.classList.remove("oculto");
+
+        document.body.classList.add("modal-abierto");
+
+        cerrarCarta.focus();
+    }
+
+    // Cerrar la carta
+    function cerrarModalCarta() {
+
+        if (modalCarta.classList.contains("oculto")) return;
+
+        modalCarta.classList.add("oculto");
+
+        document.body.classList.remove("modal-abierto");
+
+        if (ultimaCartaAbierta && ultimaCartaAbierta.isConnected) {
+            ultimaCartaAbierta.focus();
         }
     }
 
-    siguienteCarta.addEventListener("click", () => {
-        if (!accesoAutorizado) return;
+    cerrarCarta.addEventListener("click", cerrarModalCarta);
 
-        if (indiceCarta < felicitacionesPrivadas.length - 1) {
-            indiceCarta++;
-            mostrarCarta();
+    // Cerrar al pulsar fuera de la carta
+    modalCarta.addEventListener("click", (evento) => {
+
+        if (evento.target === modalCarta) {
+            cerrarModalCarta();
         }
+
+    });
+
+    // Cerrar también con Escape
+    document.addEventListener("keydown", (evento) => {
+
+        if (
+            evento.key === "Escape" &&
+            !modalCarta.classList.contains("oculto")
+        ) {
+            cerrarModalCarta();
+        }
+
     });
 
     // ==========================================

@@ -865,3 +865,270 @@ footer {
         transition: none;
     }
 }
+
+
+/* ==========================================
+   COLECCIÓN DE CARTAS
+========================================== */
+
+.texto-intro-cartas {
+    text-align: center;
+    margin: 15px auto 25px;
+    color: #f5d9f0;
+}
+
+.muro-cartas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+    margin: 25px auto;
+}
+
+/* Cada sobre */
+
+.sobre-carta {
+    position: relative;
+    min-height: 155px;
+    padding: 22px 15px;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 18px;
+    background: linear-gradient(145deg, #65447f, #382354);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sobre-carta:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 14px 30px rgba(255,105,180,0.25);
+}
+
+.sobre-carta:focus-visible {
+    outline: 3px solid #ffb4d8;
+    outline-offset: 4px;
+}
+
+.icono-sobre {
+    font-size: 38px;
+}
+
+.sobre-carta strong {
+    font-size: 17px;
+    color: #ffd6e9;
+}
+
+.sobre-carta span {
+    font-size: 13px;
+}
+
+.abrir-sobre-texto {
+    color: #ffd38c;
+    margin-top: 5px;
+}
+
+/* ==========================================
+   VENTANA EMERGENTE
+========================================== */
+
+.modal-carta {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(12, 5, 30, 0.82);
+    backdrop-filter: blur(9px);
+    animation: aparecerFondo 0.3s ease;
+}
+
+.modal-carta.oculto {
+    display: none;
+}
+
+.modal-carta__contenido {
+    position: relative;
+    width: min(100%, 520px);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 45px 35px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 25px;
+    text-align: center;
+    color: white;
+    background: linear-gradient(145deg, #594078, #30204f);
+    box-shadow: 0 20px 70px rgba(0,0,0,0.5);
+    animation: abrirCartaAnimacion 0.55s cubic-bezier(.2,.8,.2,1);
+}
+
+.cerrar-carta {
+    position: absolute;
+    top: 15px;
+    right: 17px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.13);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.cerrar-carta:hover {
+    background: rgba(255,105,180,0.5);
+    transform: rotate(90deg);
+}
+
+.decoracion-carta {
+    font-size: 55px;
+    margin-bottom: 12px;
+    animation: latidoCarta 1.5s infinite;
+}
+
+.numero-carta {
+    color: #ffd38c;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.modal-carta__contenido h3 {
+    color: #ffb6d5;
+    font-size: 27px;
+    margin: 18px 0;
+}
+
+.separador-carta {
+    color: #ffd38c;
+    margin: 20px 0;
+    letter-spacing: 8px;
+}
+
+.mensaje-carta {
+    font-size: 17px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: #fff0f8;
+    margin: 25px 0;
+}
+
+.despedida-carta {
+    color: #ffd38c;
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+/* ==========================================
+   ANIMACIONES
+========================================== */
+
+@keyframes aparecerFondo {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes abrirCartaAnimacion {
+    0% {
+        opacity: 0;
+        transform: translateY(45px) scale(0.75) rotate(-4deg);
+    }
+    70% {
+        transform: translateY(-5px) scale(1.02) rotate(1deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0);
+    }
+}
+
+@keyframes latidoCarta {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.13); }
+}
+
+/* Móviles */
+
+@media (max-width: 600px) {
+    .muro-cartas {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-carta {
+        padding: 12px;
+    }
+
+    .modal-carta__contenido {
+        padding: 45px 22px 30px;
+    }
+
+    .modal-carta__contenido h3 {
+        font-size: 23px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-carta,
+    .modal-carta__contenido,
+    .decoracion-carta {
+        animation: none;
+    }
+
+    .sobre-carta {
+        transition: none;
+    }
+}
+
+
+/* ==========================================
+   NAVEGACIÓN ENTRE CARTAS
+========================================== */
+
+.navegacion-cartas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.navegacion-cartas button {
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 30px;
+    padding: 12px 19px;
+    background: linear-gradient(120deg, #ff83bb, #ffd18d);
+    color: #382047;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.25s, opacity 0.25s;
+}
+
+.navegacion-cartas button:hover:not(:disabled) {
+    transform: scale(1.06);
+}
+
+.navegacion-cartas button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+body.modal-abierto {
+    overflow: hidden;
+}
+
+@media (max-width: 450px) {
+    .navegacion-cartas button {
+        padding: 11px 13px;
+        font-size: 13px;
+    }
+}

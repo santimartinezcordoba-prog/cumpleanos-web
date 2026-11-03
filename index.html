@@ -144,20 +144,65 @@
           💌 Descubrir tus cartas
         </button>
 
-        <!-- MENSAJES -->
-        <div id="zona-cartas" class="oculto">
-          <h2>💌 Unas palabras para ti</h2>
 
-          <div id="muroFelicitaciones"></div>
+<!-- MENSAJES -->
+<div id="zona-cartas" class="oculto">
 
-          <button type="button" id="siguienteCarta" class="oculto">
-            Siguiente carta →
-          </button>
+    <h2>💌 Unas palabras para ti</h2>
 
-          <button type="button" id="abrirSorpresaFinal" class="oculto">
-            🎁 Abrir la sorpresa final
-          </button>
+    <p class="texto-intro-cartas">
+        Hay personas que han querido dedicarte unas palabras especiales.
+        ¡Abre sus cartas! 💖
+    </p>
+
+    <!-- Colección de cartas -->
+    <div id="muroFelicitaciones" class="muro-cartas oculto"></div>
+
+    <!-- Sorpresa final -->
+    <button type="button" id="abrirSorpresaFinal" class="oculto">
+        🎁 Abrir la sorpresa final
+    </button>
+
+    <!-- Ventana emergente de cada carta -->
+    <div id="modalCarta" class="modal-carta oculto"
+         role="dialog" aria-modal="true" aria-labelledby="nombreCarta">
+
+        <div class="modal-carta__contenido">
+
+            <button type="button" id="cerrarCarta"
+                    class="cerrar-carta" aria-label="Cerrar carta">
+                ✕
+            </button>
+
+            <div class="decoracion-carta">💌</div>
+
+            <p id="numeroCarta" class="numero-carta"></p>
+
+            <h3 id="nombreCarta"></h3>
+
+            <div class="separador-carta">♥ ✦ ♥</div>
+
+            <p id="mensajeCarta" class="mensaje-carta"></p>
+
+            <p class="despedida-carta">
+                Con mucho cariño para ti 💖
+            </p>
+            <div class="navegacion-cartas">
+
+    <button type="button" id="cartaAnterior">
+        ← Anterior
+    </button>
+
+    <button type="button" id="cartaSiguiente">
+        Siguiente carta →
+    </button>
+
+</div>
         </div>
+    </div>
+
+</div>
+
 
         <!-- VÍDEOS -->
         <div id="zona-final" class="oculto">
