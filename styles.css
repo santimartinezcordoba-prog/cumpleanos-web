@@ -1572,3 +1572,104 @@ body.modo-final .birthday-card {
         animation: none;
     }
 }
+
+/* AJUSTES EXCLUSIVOS DE LA FELICITACIÓN FINAL */
+
+/* La felicitación queda flotando sobre la página, sin una tarjeta opaca. */
+body.modo-final #zona-final.video-overlay.modo-final .video-popup {
+    width: min(760px, 56vw);
+    max-height: calc(100dvh - 36px);
+    padding: 14px 20px;
+    overflow-y: auto;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+/* Recolocamos los personajes solo mientras se muestra la felicitación final. */
+body.modo-final #panel-personaje .imagen-personaje {
+    position: fixed;
+    max-width: none;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+body.modo-final #panel-personaje .personaje-paco {
+    left: 1vw;
+    right: auto;
+    top: 27vh;
+    bottom: auto;
+    height: min(34vh, 350px);
+    z-index: 3;
+}
+
+body.modo-final #panel-personaje .personaje-miss {
+    left: 10vw;
+    right: auto;
+    top: auto;
+    bottom: -5vh;
+    height: min(48vh, 510px);
+    z-index: 4;
+}
+
+body.modo-final #panel-personaje .personaje-reyna {
+    left: auto;
+    right: 1vw;
+    top: auto;
+    bottom: -3vh;
+    height: min(43vh, 450px);
+    z-index: 2;
+}
+
+/* En pantallas estrechas, el texto queda arriba y los personajes abajo. */
+@media (max-width: 900px) {
+    body.modo-final #zona-final.video-overlay.modo-final .video-popup {
+        width: min(100%, 680px);
+        max-height: calc(100dvh - 150px);
+        margin-top: -12vh;
+        padding: 10px 12px;
+    }
+
+    body.modo-final #panel-personaje .personaje-paco {
+        left: 0;
+        top: auto;
+        bottom: -2vh;
+        height: 24vh;
+    }
+
+    body.modo-final #panel-personaje .personaje-miss {
+        left: 22vw;
+        bottom: -3vh;
+        height: 29vh;
+    }
+
+    body.modo-final #panel-personaje .personaje-reyna {
+        right: 0;
+        bottom: -2vh;
+        height: 26vh;
+    }
+}
+
+@media (max-width: 600px) {
+    body.modo-final #zona-final.video-overlay.modo-final .video-popup {
+        max-height: calc(100dvh - 125px);
+        margin-top: -14vh;
+        padding: 8px 6px;
+    }
+
+    body.modo-final #panel-personaje .personaje-paco {
+        height: 19vh;
+    }
+
+    body.modo-final #panel-personaje .personaje-miss {
+        left: 24vw;
+        height: 23vh;
+    }
+
+    body.modo-final #panel-personaje .personaje-reyna {
+        height: 21vh;
+    }
+}
+
