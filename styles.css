@@ -1399,3 +1399,176 @@ body.modo-videos #piePagina {
         animation: none;
     }
 }
+
+
+/* GALERÍA FINAL DE VÍDEOS */
+
+#zona-final .coleccion-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    gap: 16px;
+    margin: 24px 0 28px;
+}
+
+#zona-final .miniatura-video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 165px;
+    padding: 22px 16px;
+    border: 1px solid rgba(255, 207, 237, 0.35);
+    border-radius: 20px;
+    background: linear-gradient(150deg, #65457f, #33224f);
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .18);
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+#zona-final .miniatura-video:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 34px rgba(255, 131, 187, .25);
+}
+
+#zona-final .miniatura-video-icono {
+    display: grid;
+    place-items: center;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(115deg, #ff8ec7, #ffdb9b);
+    color: #3b2156;
+    font-size: 27px;
+    padding-left: 3px;
+}
+
+#zona-final .miniatura-video strong {
+    color: #ffe4ac;
+    font: 800 17px Outfit, sans-serif;
+    overflow-wrap: anywhere;
+}
+
+#zona-final .miniatura-video span:last-child {
+    color: #eadcf6;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+#zona-final .intro-coleccion {
+    color: #eadcf6;
+    line-height: 1.7;
+}
+
+#zona-final .acciones-coleccion {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 22px;
+}
+
+#zona-final #volverColeccionVideos,
+#zona-final .acciones-coleccion button,
+#zona-final #volverCartasFinal {
+    padding: 14px 22px;
+    border: 0;
+    border-radius: 99px;
+    color: #30183e;
+    background: linear-gradient(110deg, #ff8ec7, #ffd7a0);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#zona-final #volverColeccionVideos {
+    display: block;
+    margin: 12px auto 0;
+}
+
+#zona-final #volverColeccionVideos:hover,
+#zona-final .acciones-coleccion button:hover,
+#zona-final #volverCartasFinal:hover {
+    box-shadow: 0 10px 25px rgba(255, 120, 186, .3);
+}
+
+/* PANTALLA DE FELICITACIÓN FINAL:
+   Se conservan los personajes y la playlist. */
+
+body.modo-final .birthday-card {
+    visibility: hidden;
+}
+
+#zona-final.video-overlay.modo-final {
+    background: transparent;
+    backdrop-filter: none;
+    pointer-events: none;
+}
+
+#zona-final.video-overlay.modo-final .video-popup {
+    pointer-events: auto;
+}
+
+#zona-final #pantallaFinal .decoracion-final {
+    font-size: clamp(25px, 5vw, 45px);
+    margin-bottom: 15px;
+    animation: flotandoFinal 2.5s ease-in-out infinite;
+}
+
+#zona-final #pantallaFinal h1 {
+    font-size: clamp(30px, 5vw, 50px);
+    line-height: 1.12;
+    color: #ffd6ec;
+}
+
+#zona-final #pantallaFinal .separador-final {
+    color: #ffda8b;
+    letter-spacing: 8px;
+    margin: 20px auto;
+}
+
+#zona-final #pantallaFinal .mensaje-final {
+    color: #f6eafa;
+    font-size: clamp(15px, 2.2vw, 18px);
+    line-height: 1.8;
+    margin: 16px auto;
+    max-width: 560px;
+}
+
+#zona-final #pantallaFinal .frase-final {
+    margin: 26px auto 14px;
+    color: #ffda8b;
+    font-size: clamp(20px, 3.2vw, 27px);
+}
+
+#zona-final #pantallaFinal .firma-final {
+    color: #f5c9e2;
+    margin: 18px auto 26px;
+}
+
+@keyframes flotandoFinal {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@media (max-width: 600px) {
+    #zona-final .coleccion-videos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+    #zona-final .miniatura-video {
+        padding: 15px 10px;
+        min-height: 150px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #zona-final .miniatura-video {
+        transition: none;
+    }
+    #zona-final #pantallaFinal .decoracion-final {
+        animation: none;
+    }
+}
