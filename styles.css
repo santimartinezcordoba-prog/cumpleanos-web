@@ -1572,22 +1572,3 @@ body.modo-final .birthday-card {
         animation: none;
     }
 }
-
-
-/* FOTO CORAZÓN BAJO SPOTIFY */
-
-.foto-corazon-spotify {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 24px auto 0;
-}
-
-.foto-corazon-spotify img {
-    display: block;
-    width: min(100%, 290px);
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 22px rgba(255, 112, 178, .25));
-}
