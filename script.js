@@ -789,8 +789,6 @@ const elementos = {
         nombre: nombre,
         mensaje: mensaje
     }]);
-git 
-if (error) throw error;
 
             if (error) throw error;
 
