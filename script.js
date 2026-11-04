@@ -50,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const zonaFinal = document.getElementById("zona-final");
     const galeria = document.getElementById("galeriaVideos");
+    const videoAnterior = document.getElementById("videoAnterior");
+    const videoSiguiente = document.getElementById("videoSiguiente");
+    const volverCartas = document.getElementById("volverCartas");
 
     const form = document.getElementById("formFelicitacion");
     const estadoFormulario = document.getElementById("estadoFormulario");
@@ -69,6 +72,7 @@ const elementos = {
     zonaFinal, galeria, form, estadoFormulario,
     panelMusica, panelPersonaje,
     cartaAnterior,cartaSiguiente,
+    videoAnterior,videoSiguiente,volverCartas,
 };
 
     const faltante = Object.entries(elementos)
@@ -78,14 +82,20 @@ const elementos = {
         console.error("Falta un elemento HTML:", faltante[0]);
         return;
     }
+    // La ventana de vídeos debe estar fuera de la tarjeta principal.
+        document.body.appendChild(zonaFinal);
 
     // ==========================================
     // 3. ESTADO DE LA PÁGINA
     // ==========================================
 
     let felicitacionesPrivadas = [];
+    let indiceCarta = 0;
     let accesoAutorizado = false;
+
     let videosCargados = false;
+    let videosDisponibles = [];
+    let indiceVideo = 0;
 
     function ocultarTodo() {
         seleccion.classList.add("oculto");
@@ -127,7 +137,16 @@ const elementos = {
     });
 
     volverInicio.addEventListener("click", () => {
-        detenerCorazones();
+
+    detenerCorazones();
+    detenerVideoActual();
+
+    document.body.classList.remove("modo-videos");
+
+    videosDisponibles = [];
+    indiceVideo = 0;
+
+    // El resto de tu código continúa igual.
 
         accesoAutorizado = false;
         felicitacionesPrivadas = [];
@@ -519,6 +538,7 @@ const elementos = {
 
     });
 
+   
     // ==========================================
     // 7. SORPRESA FINAL: VÍDEOS
     // ==========================================
@@ -527,31 +547,32 @@ const elementos = {
 
         if (!accesoAutorizado) return;
 
-        zonaFinal.classList.remove("oculto");
         abrirSorpresaFinal.disabled = true;
         abrirSorpresaFinal.textContent = "🎬 Preparando sorpresa...";
 
+        // Ocultar la página anterior y mostrar el popup.
+        zonaFinal.classList.remove("oculto");
+        document.body.classList.add("modo-videos");
+
         lanzarConfeti();
 
+        // Cargar los vídeos solo la primera vez.
         if (!videosCargados) {
-            await cargarVideos();
-            videosCargados = true;
+            videosCargados = await cargarVideos();
         }
 
-        abrirSorpresaFinal.textContent = "💖 ¡Sorpresa final!";
-
-        zonaFinal.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
+        indiceVideo = 0;
+        mostrarVideo();
     });
 
-    // Los vídeos no se solicitan hasta abrir la sorpresa final.
+
+    // Cargar vídeos desde videos.json.
     async function cargarVideos() {
 
         galeria.textContent = "🎬 Preparando tus vídeos...";
 
         try {
+
             const respuesta = await fetch("./videos.json", {
                 cache: "no-store"
             });
@@ -561,55 +582,181 @@ const elementos = {
             }
 
             const videos = await respuesta.json();
-            galeria.replaceChildren();
 
-            if (!Array.isArray(videos) || videos.length === 0) {
-                galeria.textContent = "Todavía no hay vídeos.";
-                return;
+            if (!Array.isArray(videos)) {
+                throw new Error("El archivo videos.json no contiene una lista válida.");
             }
 
-            videos.forEach((item) => {
+            videosDisponibles = videos.filter(item =>
+                item &&
+                typeof item.archivo === "string" &&
+                item.archivo.trim().length > 0
+            );
 
-                if (!item || typeof item.archivo !== "string") return;
-
-                const tarjeta = document.createElement("article");
-                tarjeta.className = "tarjeta-video";
-
-                const titulo = document.createElement("h3");
-                titulo.textContent =
-                    item.titulo || "Una felicitación especial";
-
-                const autor = document.createElement("p");
-                autor.textContent =
-                    `🎥 De: ${item.nombre || "Alguien especial"}`;
-
-                const reproductor = document.createElement("video");
-                reproductor.controls = true;
-                reproductor.preload = "none";
-                reproductor.playsInline = true;
-
-                const source = document.createElement("source");
-                source.src = item.archivo;
-                source.type = "video/mp4";
-
-                reproductor.appendChild(source);
-                tarjeta.append(titulo, autor, reproductor);
-
-                galeria.appendChild(tarjeta);
-            });
-
-            if (!galeria.children.length) {
-                galeria.textContent = "No hay vídeos válidos en la galería.";
-            }
+            return true;
 
         } catch (error) {
-            console.error("Error al cargar vídeos:", error);
-            galeria.textContent = "No se pudieron cargar los vídeos.";
 
-            // Permite volver a intentar.
-            videosCargados = false;
+            console.error("Error al cargar vídeos:", error);
+
+            videosDisponibles = [];
+
+            galeria.textContent =
+                "No se pudieron cargar los vídeos. Comprueba videos.json.";
+
+            return false;
         }
     }
+
+
+    // Detener cualquier vídeo que esté reproduciéndose.
+    function detenerVideoActual() {
+
+        galeria.querySelectorAll("video").forEach(video => {
+
+            video.pause();
+            video.removeAttribute("src");
+
+            video.querySelectorAll("source").forEach(source => {
+                source.removeAttribute("src");
+            });
+
+            video.load();
+        });
+    }
+
+
+    // Mostrar un único vídeo.
+    function mostrarVideo() {
+
+        detenerVideoActual();
+        galeria.replaceChildren();
+
+        volverCartas.classList.remove("oculto");
+
+        // Si todavía no hay vídeos.
+        if (videosDisponibles.length === 0) {
+
+            const mensaje = document.createElement("p");
+
+            mensaje.textContent =
+                "Todavía no hay vídeos para mostrar. 💖";
+
+            galeria.appendChild(mensaje);
+
+            videoAnterior.classList.add("oculto");
+            videoSiguiente.classList.add("oculto");
+
+            return;
+        }
+
+        const item = videosDisponibles[indiceVideo];
+
+        // Crear tarjeta.
+        const tarjeta = document.createElement("article");
+
+        tarjeta.className = "tarjeta-video animar-video";
+
+        // Número del vídeo.
+        const numero = document.createElement("p");
+
+        numero.textContent =
+            `VÍDEO ${indiceVideo + 1} DE ${videosDisponibles.length}`;
+
+        // Título.
+        const titulo = document.createElement("h3");
+
+        titulo.textContent =
+            item.titulo || "Una felicitación especial";
+
+        // Autor.
+        const autor = document.createElement("p");
+
+        autor.textContent =
+            `🎥 De: ${item.nombre || "Alguien especial"}`;
+
+        // Reproductor.
+        const reproductor = document.createElement("video");
+
+        reproductor.controls = true;
+        reproductor.preload = "metadata";
+        reproductor.playsInline = true;
+
+        const source = document.createElement("source");
+
+        source.src = item.archivo;
+        source.type = "video/mp4";
+
+        reproductor.appendChild(source);
+
+        tarjeta.append(numero, titulo, autor, reproductor);
+
+        galeria.appendChild(tarjeta);
+
+        // Controlar botones según el vídeo actual.
+        videoAnterior.classList.toggle(
+            "oculto",
+            indiceVideo === 0
+        );
+
+        videoSiguiente.classList.toggle(
+            "oculto",
+            indiceVideo === videosDisponibles.length - 1
+        );
+
+        volverCartas.classList.remove("oculto");
+    }
+
+
+    // Vídeo anterior.
+    videoAnterior.addEventListener("click", () => {
+
+        if (indiceVideo > 0) {
+
+            indiceVideo--;
+
+            mostrarVideo();
+        }
+    });
+
+
+    // Vídeo siguiente.
+    videoSiguiente.addEventListener("click", () => {
+
+        if (indiceVideo < videosDisponibles.length - 1) {
+
+            indiceVideo++;
+
+            mostrarVideo();
+        }
+    });
+
+
+    // Volver a las cartas.
+    volverCartas.addEventListener("click", () => {
+
+        // Detener y ocultar los vídeos.
+        detenerVideoActual();
+
+        galeria.replaceChildren();
+
+        zonaFinal.classList.add("oculto");
+
+        document.body.classList.remove("modo-videos");
+
+        // Restaurar el botón de la sorpresa final.
+        abrirSorpresaFinal.disabled = false;
+
+        abrirSorpresaFinal.textContent =
+            "🎁 Abrir la sorpresa final";
+
+        // Volver a la sección de cartas.
+        zonaCartas.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    });
+
 
     // ==========================================
     // 8. ENVIAR FELICITACIONES
