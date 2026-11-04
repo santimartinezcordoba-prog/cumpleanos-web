@@ -691,7 +691,7 @@ footer {
 
 .personaje-miss {
     left: 20px;
-    top: 560px;
+    top: 360px;
     height: 600px;
     z-index: 3;
     transform: scaleX(-1);
@@ -699,7 +699,7 @@ footer {
 
 .personaje-paco {
     left: -50px;
-    top: 0;
+    top: 60px;
     height: 500px;
     z-index: 2;
     transform: scaleX(-1);
@@ -707,7 +707,7 @@ footer {
 
 .personaje-reyna {
     left: 320px;
-    top: -200px;
+    top: -90px;
     height: 430px;
     z-index: 1;
 }
