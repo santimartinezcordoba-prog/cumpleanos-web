@@ -205,38 +205,124 @@
 
 
         
-<!-- SORPRESA FINAL: VÍDEOS -->
+
+<!-- ==========================================
+     SORPRESA FINAL: VÍDEOS Y FELICITACIÓN
+========================================== -->
+
 <section id="zona-final" class="video-overlay oculto">
 
     <div class="video-popup">
 
-        <p class="video-etiqueta">✨ UNA SORPRESA ESPECIAL ✨</p>
+        <!-- PANTALLA 1: REPRODUCCIÓN INICIAL -->
 
-        <h2>🎬 Tus vídeos para recordar</h2>
+        <div id="pantallaReproduccion">
 
-        <div id="galeriaVideos" class="galeria-videos">
-        </div>
+            <p class="video-etiqueta">
+                ✨ UNA SORPRESA ESPECIAL ✨
+            </p>
 
-        <div class="video-controles">
+            <h2>🎬 Tus vídeos para recordar</h2>
 
-            <button type="button" id="videoAnterior" class="oculto">
-                ← Vídeo anterior
+            <div id="galeriaVideos" class="galeria-videos"></div>
+
+            <div class="video-controles">
+
+                <button type="button" id="videoAnterior" class="oculto">
+                    ← Vídeo anterior
+                </button>
+
+                <button type="button" id="videoSiguiente" class="oculto">
+                    Siguiente vídeo →
+                </button>
+
+            </div>
+
+            <button type="button" id="volverCartas" class="oculto">
+                💌 Volver a mis cartas
             </button>
 
-            <button type="button" id="videoSiguiente" class="oculto">
-                Siguiente vídeo →
-            </button>
+        </div>
+
+
+        <!-- PANTALLA 2: COLECCIÓN DE TODOS LOS VÍDEOS -->
+
+        <div id="coleccionVideos" class="oculto">
+
+            <p class="video-etiqueta">
+                ✨ TODOS TUS RECUERDOS ✨
+            </p>
+
+            <h2>🎬 Todos tus vídeos</h2>
+
+            <p class="intro-coleccion">
+                Puedes volver a ver cualquiera de ellos cuando quieras. 💖
+            </p>
+
+            <div id="listaVideos" class="coleccion-videos"></div>
+
+            <div class="acciones-coleccion">
+
+                <button type="button" id="volverCartasColeccion">
+                    💌 Volver a mis cartas
+                </button>
+
+                <button type="button" id="terminarSorpresa">
+                    🎉 Terminar sorpresa
+                </button>
+
+            </div>
 
         </div>
 
-        <button type="button" id="volverCartas" class="oculto">
-            💌 Volver a mis cartas
-        </button>
+
+        <!-- PANTALLA 3: FELICITACIÓN FINAL -->
+
+        <div id="pantallaFinal" class="oculto">
+
+            <div class="decoracion-final">
+                🎉 💖 🎂 💖 🎉
+            </div>
+
+            <p class="video-etiqueta">
+                ✨ Y AHORA, UNA ÚLTIMA COSA ✨
+            </p>
+
+            <h1>¡FELIZ CUMPLEAÑOS, BRENDA!</h1>
+
+            <div class="separador-final">
+                ♥ ✦ ♥ ✦ ♥
+            </div>
+
+            <p class="mensaje-final">
+                Hoy es tu día y queremos desearte lo mejor del mundo.
+                Que nunca te falten motivos para sonreír, personas
+                que te quieran y momentos que recordar.
+            </p>
+
+            <p class="mensaje-final">
+                Ojalá todos tus sueños se hagan realidad y que este
+                nuevo año venga cargado de aventuras, sorpresas,
+                risas y muchísima felicidad.
+            </p>
+
+            <h2 class="frase-final">
+                ¡TE MERECES TODO LO BONITO DEL MUNDO! ❤️
+            </h2>
+
+            <p class="firma-final">
+                Con muchísimo cariño, de parte de todos. 💌
+            </p>
+
+            <button type="button" id="volverCartasFinal">
+                💌 Volver a mis cartas
+            </button>
+
+        </div>
 
     </div>
 
 </section>
-
 
       <!-- INVITADOS -->
       <section id="zona-invitado" class="oculto">
