@@ -53,6 +53,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const videoAnterior = document.getElementById("videoAnterior");
     const videoSiguiente = document.getElementById("videoSiguiente");
     const volverCartas = document.getElementById("volverCartas");
+    const volverColeccionVideos = document.getElementById("volverColeccionVideos");
+    const pantallaReproduccion = document.getElementById("pantallaReproduccion");
+    const coleccionVideos = document.getElementById("coleccionVideos");
+    const listaVideos = document.getElementById("listaVideos");
+    const volverCartasColeccion = document.getElementById("volverCartasColeccion");
+    const terminarSorpresa = document.getElementById("terminarSorpresa");
+    const pantallaFinal = document.getElementById("pantallaFinal");
+    const volverCartasFinal = document.getElementById("volverCartasFinal");
 
     const form = document.getElementById("formFelicitacion");
     const estadoFormulario = document.getElementById("estadoFormulario");
@@ -73,6 +81,9 @@ const elementos = {
     panelMusica, panelPersonaje,
     cartaAnterior,cartaSiguiente,
     videoAnterior,videoSiguiente,volverCartas,
+    volverColeccionVideos, pantallaReproduccion, coleccionVideos,
+    listaVideos, volverCartasColeccion, terminarSorpresa,
+    pantallaFinal, volverCartasFinal,
 };
 
     const faltante = Object.entries(elementos)
@@ -96,6 +107,7 @@ const elementos = {
     let videosCargados = false;
     let videosDisponibles = [];
     let indiceVideo = 0;
+    let videoDesdeColeccion = false;
 
     function ocultarTodo() {
         seleccion.classList.add("oculto");
@@ -544,217 +556,240 @@ const elementos = {
     // ==========================================
 
     abrirSorpresaFinal.addEventListener("click", async () => {
-
-        if (!accesoAutorizado) return;
+        if (!accesoAutorizado || abrirSorpresaFinal.disabled) return;
 
         abrirSorpresaFinal.disabled = true;
         abrirSorpresaFinal.textContent = "🎬 Preparando sorpresa...";
 
-        // Ocultar la página anterior y mostrar el popup.
-        zonaFinal.classList.remove("oculto");
+        pantallaFinal.classList.add("oculto");
+        coleccionVideos.classList.add("oculto");
+        pantallaReproduccion.classList.remove("oculto");
+        zonaFinal.classList.remove("modo-final", "oculto");
+        document.body.classList.remove("modo-final");
         document.body.classList.add("modo-videos");
 
         lanzarConfeti();
 
-        // Cargar los vídeos solo la primera vez.
         if (!videosCargados) {
             videosCargados = await cargarVideos();
         }
 
         indiceVideo = 0;
+        videoDesdeColeccion = false;
         mostrarVideo();
     });
 
 
-    // Cargar vídeos desde videos.json.
+    // videos.json solo se solicita después de que Brenda desbloquee la sorpresa.
     async function cargarVideos() {
-
         galeria.textContent = "🎬 Preparando tus vídeos...";
 
         try {
+            const respuesta = await fetch("./videos.json", { cache: "no-store" });
+            if (!respuesta.ok) throw new Error("No se pudo encontrar videos.json");
 
-            const respuesta = await fetch("./videos.json", {
-                cache: "no-store"
-            });
+            const datos = await respuesta.json();
+            if (!Array.isArray(datos)) throw new Error("videos.json no contiene una lista");
 
-            if (!respuesta.ok) {
-                throw new Error("No se pudo encontrar videos.json");
-            }
-
-            const videos = await respuesta.json();
-
-            if (!Array.isArray(videos)) {
-                throw new Error("El archivo videos.json no contiene una lista válida.");
-            }
-
-            videosDisponibles = videos.filter(item =>
-                item &&
-                typeof item.archivo === "string" &&
+            videosDisponibles = datos.filter(item =>
+                item && typeof item.archivo === "string" &&
                 item.archivo.trim().length > 0
             );
-
             return true;
-
         } catch (error) {
-
             console.error("Error al cargar vídeos:", error);
-
             videosDisponibles = [];
-
-            galeria.textContent =
-                "No se pudieron cargar los vídeos. Comprueba videos.json.";
-
             return false;
         }
     }
 
 
-    // Detener cualquier vídeo que esté reproduciéndose.
     function detenerVideoActual() {
-
         galeria.querySelectorAll("video").forEach(video => {
-
             video.pause();
             video.removeAttribute("src");
-
             video.querySelectorAll("source").forEach(source => {
                 source.removeAttribute("src");
             });
-
             video.load();
         });
     }
 
 
-    // Mostrar un único vídeo.
+    // Ventana emergente de un solo vídeo.
     function mostrarVideo() {
+        if (!accesoAutorizado) return;
 
         detenerVideoActual();
         galeria.replaceChildren();
+        pantallaReproduccion.classList.remove("oculto");
+        coleccionVideos.classList.add("oculto");
+        pantallaFinal.classList.add("oculto");
 
         volverCartas.classList.remove("oculto");
+        volverColeccionVideos.classList.toggle("oculto", !videoDesdeColeccion);
 
-        // Si todavía no hay vídeos.
-        if (videosDisponibles.length === 0) {
-
-            const mensaje = document.createElement("p");
-
-            mensaje.textContent =
-                "Todavía no hay vídeos para mostrar. 💖";
-
-            galeria.appendChild(mensaje);
-
+        if (!videosDisponibles.length) {
+            const aviso = document.createElement("p");
+            aviso.textContent = videosCargados
+                ? "Todavía no hay vídeos para mostrar. 💖"
+                : "No se pudieron cargar los vídeos. Comprueba videos.json.";
+            galeria.appendChild(aviso);
             videoAnterior.classList.add("oculto");
             videoSiguiente.classList.add("oculto");
-
             return;
         }
 
         const item = videosDisponibles[indiceVideo];
 
-        // Crear tarjeta.
         const tarjeta = document.createElement("article");
-
         tarjeta.className = "tarjeta-video animar-video";
 
-        // Número del vídeo.
         const numero = document.createElement("p");
+        numero.textContent = "VÍDEO " + (indiceVideo + 1) +
+            " DE " + videosDisponibles.length;
 
-        numero.textContent =
-            `VÍDEO ${indiceVideo + 1} DE ${videosDisponibles.length}`;
-
-        // Título.
         const titulo = document.createElement("h3");
+        titulo.textContent = item.titulo || "Una felicitación especial";
 
-        titulo.textContent =
-            item.titulo || "Una felicitación especial";
-
-        // Autor.
         const autor = document.createElement("p");
+        autor.textContent = "🎥 De: " + (item.nombre || "Alguien especial");
 
-        autor.textContent =
-            `🎥 De: ${item.nombre || "Alguien especial"}`;
-
-        // Reproductor.
         const reproductor = document.createElement("video");
-
         reproductor.controls = true;
         reproductor.preload = "metadata";
         reproductor.playsInline = true;
 
-        const source = document.createElement("source");
-
-        source.src = item.archivo;
-        source.type = "video/mp4";
-
-        reproductor.appendChild(source);
+        const fuente = document.createElement("source");
+        fuente.src = item.archivo;
+        fuente.type = "video/mp4";
+        reproductor.appendChild(fuente);
 
         tarjeta.append(numero, titulo, autor, reproductor);
-
         galeria.appendChild(tarjeta);
 
-        // Controlar botones según el vídeo actual.
-        videoAnterior.classList.toggle(
-            "oculto",
-            indiceVideo === 0
-        );
+        videoAnterior.classList.toggle("oculto", indiceVideo === 0);
 
-        videoSiguiente.classList.toggle(
-            "oculto",
+        // En el último vídeo, el botón conduce a la colección completa.
+        videoSiguiente.classList.remove("oculto");
+        videoSiguiente.textContent =
             indiceVideo === videosDisponibles.length - 1
-        );
-
-        volverCartas.classList.remove("oculto");
+                ? "🎬 Ver todos los vídeos"
+                : "Siguiente vídeo →";
     }
 
 
-    // Vídeo anterior.
     videoAnterior.addEventListener("click", () => {
-
         if (indiceVideo > 0) {
-
             indiceVideo--;
-
             mostrarVideo();
         }
     });
 
-
-    // Vídeo siguiente.
     videoSiguiente.addEventListener("click", () => {
+        if (!videosDisponibles.length) return;
 
         if (indiceVideo < videosDisponibles.length - 1) {
-
             indiceVideo++;
-
             mostrarVideo();
+        } else {
+            mostrarColeccionVideos();
         }
     });
 
 
-    // Volver a las cartas.
-    volverCartas.addEventListener("click", () => {
+    // Cuadrícula de vídeos: cada tarjeta abre el reproductor individual.
+    function mostrarColeccionVideos() {
+        if (!accesoAutorizado) return;
 
-        // Detener y ocultar los vídeos.
         detenerVideoActual();
+        galeria.replaceChildren();
+        listaVideos.replaceChildren();
 
+        pantallaReproduccion.classList.add("oculto");
+        pantallaFinal.classList.add("oculto");
+        coleccionVideos.classList.remove("oculto");
+        videoDesdeColeccion = true;
+
+        if (!videosDisponibles.length) {
+            listaVideos.textContent = "No hay vídeos disponibles todavía.";
+            return;
+        }
+
+        videosDisponibles.forEach((item, index) => {
+            const boton = document.createElement("button");
+            boton.type = "button";
+            boton.className = "miniatura-video";
+            boton.setAttribute("aria-label",
+                "Ver vídeo de " + (item.nombre || "Alguien especial"));
+
+            const icono = document.createElement("span");
+            icono.className = "miniatura-video-icono";
+            icono.textContent = "▶";
+
+            const titulo = document.createElement("strong");
+            titulo.textContent = item.titulo || "Una felicitación especial";
+
+            const autor = document.createElement("span");
+            autor.textContent = "De: " + (item.nombre || "Alguien especial");
+
+            boton.append(icono, titulo, autor);
+            boton.addEventListener("click", () => {
+                indiceVideo = index;
+                videoDesdeColeccion = true;
+                mostrarVideo();
+            });
+            listaVideos.appendChild(boton);
+        });
+    }
+
+    volverColeccionVideos.addEventListener("click", mostrarColeccionVideos);
+
+
+    // Volver a las cartas sin repetir la contraseña.
+    function volverALasCartas() {
+        detenerVideoActual();
         galeria.replaceChildren();
 
         zonaFinal.classList.add("oculto");
+        zonaFinal.classList.remove("modo-final");
+        pantallaFinal.classList.add("oculto");
+        coleccionVideos.classList.add("oculto");
+        pantallaReproduccion.classList.remove("oculto");
+
+        document.body.classList.remove("modo-videos", "modo-final");
+
+        abrirSorpresaFinal.disabled = false;
+        abrirSorpresaFinal.textContent = "🎁 Abrir la sorpresa final";
+
+        zonaCartas.classList.remove("oculto");
+        mostrarColeccionCartas();
+        zonaCartas.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    volverCartas.addEventListener("click", volverALasCartas);
+    volverCartasColeccion.addEventListener("click", volverALasCartas);
+    volverCartasFinal.addEventListener("click", volverALasCartas);
+
+
+    // Felicitación final: ocultamos las cartas y los vídeos, pero no
+    // los personajes ni la playlist de Brenda.
+    terminarSorpresa.addEventListener("click", () => {
+        if (!accesoAutorizado) return;
+        detenerVideoActual();
+        galeria.replaceChildren();
+
+        coleccionVideos.classList.add("oculto");
+        pantallaReproduccion.classList.add("oculto");
+        pantallaFinal.classList.remove("oculto");
 
         document.body.classList.remove("modo-videos");
+        document.body.classList.add("modo-final");
+        zonaFinal.classList.add("modo-final");
+        panelPersonaje.classList.remove("oculto");
+        panelMusica.classList.remove("oculto");
 
-        // Restaurar el botón de la sorpresa final.
-        abrirSorpresaFinal.disabled = false;
-
-        abrirSorpresaFinal.textContent =
-            "🎁 Abrir la sorpresa final";
-
-        // Volver a la sección de cartas.
-        zonaCartas.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+        lanzarConfeti();
     });
 
 
@@ -789,8 +824,6 @@ const elementos = {
         nombre: nombre,
         mensaje: mensaje
     }]);
-git 
-if (error) throw error;
 
             if (error) throw error;
 
