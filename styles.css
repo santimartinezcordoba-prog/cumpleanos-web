@@ -1656,13 +1656,11 @@ body.modo-final #panel-personaje .personaje-paco {
 }
 
 body.modo-final #panel-personaje .personaje-miss {
-    position: fixed;
-    left: 13.5vw;
-    right: auto;
-    top: 300px;
-    bottom: -5vh;
-    height: min(48vh, 510px);
-    z-index: 4;
+    left: 20px;
+    top: 360px;
+    height: 600px;
+    z-index: 3;
+    transform: scaleX(-1);
 }
 
 /* Reyna vuelve a su posición original; no se recoloca para esta pantalla. */
