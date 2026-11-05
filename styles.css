@@ -1634,7 +1634,7 @@ body.modo-final #zona-final #pantallaFinal .firma-final {
    exclusivamente durante la felicitación final. */
 body.modo-final #panel-musica {
     position: fixed;
-    top: 50%;
+    top: -250%;
     right: clamp(20px, 9.6vw, 160px);
     left: auto;
     width: min(295px, 18vw);
