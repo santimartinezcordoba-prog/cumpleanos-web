@@ -1473,7 +1473,7 @@ body.modo-videos #piePagina {
 
 #zona-final #volverColeccionVideos,
 #zona-final .acciones-coleccion button,
-#zona-final #volverCartasFinal {
+#zona-final #pantallaFinal .acciones-final button {
     padding: 14px 22px;
     border: 0;
     border-radius: 99px;
@@ -1488,9 +1488,18 @@ body.modo-videos #piePagina {
     margin: 12px auto 0;
 }
 
+#zona-final #pantallaFinal .acciones-final {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 22px;
+}
+
 #zona-final #volverColeccionVideos:hover,
 #zona-final .acciones-coleccion button:hover,
-#zona-final #volverCartasFinal:hover {
+#zona-final #pantallaFinal .acciones-final button:hover {
     box-shadow: 0 10px 25px rgba(255, 120, 186, .3);
 }
 
@@ -1579,6 +1588,12 @@ body.modo-final .birthday-card {
 body.modo-final {
     height: 100dvh;
     overflow: hidden;
+    background-attachment: fixed;
+}
+
+/* La pantalla final no necesita el pie de página que queda bajo los botones. */
+body.modo-final #piePagina {
+    display: none !important;
 }
 
 /* La felicitación queda flotando directamente sobre el fondo, sin tarjeta. */
