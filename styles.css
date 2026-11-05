@@ -1674,6 +1674,7 @@ body.modo-final #panel-personaje .personaje-reyna {
     bottom: auto;
     height: 450px;
     z-index: 1;
+    transform: scaleX(-1);
 }
 
 /* En pantallas medianas, reducimos la playlist y dejamos espacio al texto. */
