@@ -1647,7 +1647,7 @@ body.modo-final #panel-musica {
 /* Paco y Miss Fortune mantienen su composición lateral en esta pantalla. */
 body.modo-final #panel-personaje .personaje-paco {
     position: fixed;
-    left: 7vw;
+    left: 5vw;
     right: auto;
     top: 21vh;
     bottom: auto;
@@ -1657,8 +1657,8 @@ body.modo-final #panel-personaje .personaje-paco {
 
 body.modo-final #panel-personaje .personaje-miss {
     left: 20px;
-    top: 360px;
-    height: 600px;
+    top: 450px;
+    height: 500px;
     z-index: 3;
     transform: scaleX(-1);
 }
@@ -1668,9 +1668,9 @@ body.modo-final #panel-personaje .personaje-reyna {
     position: absolute;
     left: 205px;
     right: auto;
-    top: -40px;
+    top: 40px;
     bottom: auto;
-    height: 450px;
+    height: 400px;
     z-index: 1;
     transform: scaleX(-1);
 }
@@ -1719,7 +1719,7 @@ body.modo-final #panel-personaje .personaje-reyna {
     }
 
     body.modo-final #panel-musica {
-        top: auto;
+        top: -1000px;
         right: 12px;
         bottom: 8px;
         width: min(230px, 48vw);
