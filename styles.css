@@ -1573,21 +1573,171 @@ body.modo-final .birthday-card {
     }
 }
 
+/* AJUSTES EXCLUSIVOS DE LA FELICITACIÓN FINAL */
 
-/* FOTO CORAZÓN BAJO SPOTIFY */
+/* Esta pantalla ocupa el alto del navegador: no se desplaza la página. */
+body.modo-final {
+    height: 100dvh;
+    overflow: hidden;
+}
 
-.foto-corazon-spotify {
-    display: flex;
-    justify-content: center;
+/* La felicitación queda flotando directamente sobre el fondo, sin tarjeta. */
+body.modo-final #zona-final.video-overlay.modo-final {
     align-items: center;
-    width: 100%;
-    margin: 24px auto 0;
+    overflow: hidden;
+    padding: 18px;
+    background: transparent;
+    backdrop-filter: none;
 }
 
-.foto-corazon-spotify img {
-    display: block;
-    width: min(100%, 290px);
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 22px rgba(255, 112, 178, .25));
+body.modo-final #zona-final.video-overlay.modo-final .video-popup {
+    width: min(760px, 56vw);
+    max-height: calc(100dvh - 36px);
+    overflow-y: auto;
+    padding: 14px 20px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
 }
+
+/* Compactamos un poco los espacios para que todo quepa sin hacer scroll. */
+body.modo-final #zona-final #pantallaFinal .decoracion-final {
+    margin-bottom: 8px;
+}
+
+body.modo-final #zona-final #pantallaFinal h1 {
+    margin: 12px 0;
+    font-size: clamp(30px, 3.5vw, 46px);
+    line-height: 1.08;
+}
+
+body.modo-final #zona-final #pantallaFinal .separador-final {
+    margin: 12px auto;
+}
+
+body.modo-final #zona-final #pantallaFinal .mensaje-final {
+    margin: 10px auto;
+    line-height: 1.55;
+}
+
+body.modo-final #zona-final #pantallaFinal .frase-final {
+    margin: 16px auto 8px;
+}
+
+body.modo-final #zona-final #pantallaFinal .firma-final {
+    margin: 10px auto 18px;
+}
+
+/* La playlist se centra verticalmente y se coloca a la derecha,
+   exclusivamente durante la felicitación final. */
+body.modo-final #panel-musica {
+    position: fixed;
+    top: 50%;
+    right: clamp(20px, 9.6vw, 160px);
+    left: auto;
+    width: min(295px, 18vw);
+    max-width: 340px;
+    transform: translateY(-50%);
+    z-index: 10001;
+}
+
+/* Paco y Miss Fortune mantienen su composición lateral en esta pantalla. */
+body.modo-final #panel-personaje .personaje-paco {
+    position: fixed;
+    left: 1vw;
+    right: auto;
+    top: 27vh;
+    bottom: auto;
+    height: min(34vh, 350px);
+    z-index: 3;
+}
+
+body.modo-final #panel-personaje .personaje-miss {
+    position: fixed;
+    left: 10vw;
+    right: auto;
+    top: auto;
+    bottom: -5vh;
+    height: min(48vh, 510px);
+    z-index: 4;
+}
+
+/* Reyna vuelve a su posición original; no se recoloca para esta pantalla. */
+body.modo-final #panel-personaje .personaje-reyna {
+    position: absolute;
+    left: 320px;
+    right: auto;
+    top: -90px;
+    bottom: auto;
+    height: 430px;
+    z-index: 1;
+}
+
+/* En pantallas medianas, reducimos la playlist y dejamos espacio al texto. */
+@media (max-width: 1250px) {
+    body.modo-final #panel-musica {
+        right: 18px;
+        width: min(270px, 24vw);
+    }
+
+    body.modo-final #zona-final.video-overlay.modo-final .video-popup {
+        width: min(680px, calc(100vw - 330px));
+        padding: 22px 26px;
+    }
+
+    body.modo-final #panel-personaje .personaje-paco {
+        left: 0;
+        top: 27vh;
+        height: 28vh;
+    }
+
+    body.modo-final #panel-personaje .personaje-miss {
+        left: 7vw;
+        height: 38vh;
+    }
+}
+
+/* En móvil, la felicitación ocupa el centro y la playlist baja a una zona
+   inferior para no tapar el mensaje. */
+@media (max-width: 760px) {
+    body.modo-final {
+        overflow: hidden;
+    }
+
+    body.modo-final #zona-final.video-overlay.modo-final {
+        align-items: flex-start;
+        padding: 12px;
+    }
+
+    body.modo-final #zona-final.video-overlay.modo-final .video-popup {
+        width: 100%;
+        max-height: calc(100dvh - 150px);
+        margin-top: 4px;
+        padding: 18px 16px;
+    }
+
+    body.modo-final #panel-musica {
+        top: auto;
+        right: 12px;
+        bottom: 8px;
+        width: min(230px, 48vw);
+        transform: none;
+    }
+
+    body.modo-final #panel-personaje .personaje-paco {
+        left: 0;
+        top: auto;
+        bottom: 2vh;
+        height: 17vh;
+    }
+
+    body.modo-final #panel-personaje .personaje-miss {
+        left: 20vw;
+        bottom: 1vh;
+        height: 20vh;
+    }
+
+}
+
