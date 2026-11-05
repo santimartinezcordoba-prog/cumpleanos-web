@@ -175,6 +175,7 @@ const elementos = {
         galeria.replaceChildren();
 
         abrirSorpresa.disabled = false;
+        abrirSorpresa.classList.remove("oculto");
         abrirSorpresa.textContent = "💌 Descubrir tus cartas";
 
         cerrarModalCarta();
@@ -278,8 +279,8 @@ const elementos = {
 
         zonaCartas.classList.remove("oculto");
 
-        abrirSorpresa.disabled = true;
-        abrirSorpresa.textContent = "💖 Tus cartas";
+        // Ya estamos mostrando las cartas: ocultamos el botón redundante.
+        abrirSorpresa.classList.add("oculto");
 
         muro.classList.add("oculto");
         abrirSorpresaFinal.classList.add("oculto");
