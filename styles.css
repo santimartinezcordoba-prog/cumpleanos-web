@@ -1659,7 +1659,7 @@ body.modo-final #panel-personaje .personaje-miss {
     position: fixed;
     left: 13.5vw;
     right: auto;
-    top: auto;
+    top: 200px;
     bottom: -5vh;
     height: min(48vh, 510px);
     z-index: 4;
@@ -1670,7 +1670,7 @@ body.modo-final #panel-personaje .personaje-reyna {
     position: absolute;
     left: 205px;
     right: auto;
-    top: 0px;
+    top: -40px;
     bottom: auto;
     height: 450px;
     z-index: 1;
