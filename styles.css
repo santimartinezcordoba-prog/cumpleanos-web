@@ -1659,7 +1659,7 @@ body.modo-final #panel-personaje .personaje-miss {
     position: fixed;
     left: 13.5vw;
     right: auto;
-    top: 200px;
+    top: 300px;
     bottom: -5vh;
     height: min(48vh, 510px);
     z-index: 4;
