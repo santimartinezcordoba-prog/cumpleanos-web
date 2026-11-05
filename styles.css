@@ -1609,8 +1609,8 @@ body.modo-final #zona-final #pantallaFinal .decoracion-final {
 
 body.modo-final #zona-final #pantallaFinal h1 {
     margin: 20px 0;
-    font-size: clamp(30px, 3.5vw, 46px);
-    line-height: 1.08;
+    font-size: clamp(30px, 5vw, 50px);
+    line-height: 1.12;
 }
 
 body.modo-final #zona-final #pantallaFinal .separador-final {
@@ -1634,12 +1634,12 @@ body.modo-final #zona-final #pantallaFinal .firma-final {
    exclusivamente durante la felicitación final. */
 body.modo-final #panel-musica {
     position: fixed;
-    top: 8vh;
+    top: 50%;
     right: clamp(20px, 9.6vw, 160px);
     left: auto;
-    width: min(295px, 18vw);
+    width: min(320px, 19vw);
     max-width: 340px;
-    transform: none;
+    transform: translateY(-50%);
     z-index: 10001;
     animation: none;
 }
