@@ -1670,9 +1670,9 @@ body.modo-final #panel-personaje .personaje-reyna {
     position: absolute;
     left: 320px;
     right: auto;
-    top: -50px;
+    top: 0px;
     bottom: auto;
-    height: 350px;
+    height: 450px;
     z-index: 1;
 }
 
