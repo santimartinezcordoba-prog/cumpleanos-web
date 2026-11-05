@@ -1581,7 +1581,7 @@ body.modo-final {
     overflow: hidden;
 }
 
-/* Recuadro translúcido para la felicitación. */
+/* La felicitación queda flotando directamente sobre el fondo, sin tarjeta. */
 body.modo-final #zona-final.video-overlay.modo-final {
     align-items: center;
     overflow: hidden;
@@ -1591,19 +1591,15 @@ body.modo-final #zona-final.video-overlay.modo-final {
 }
 
 body.modo-final #zona-final.video-overlay.modo-final .video-popup {
-    width: min(760px, calc(100vw - 390px));
+    width: min(760px, 56vw);
     max-height: calc(100dvh - 36px);
     overflow-y: auto;
-    padding: 26px 34px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 28px;
-    background: linear-gradient(
-        145deg,
-        rgba(88, 64, 119, 0.96),
-        rgba(44, 29, 73, 0.96)
-    );
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(15px);
+    padding: 14px 20px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
 }
 
 /* Compactamos un poco los espacios para que todo quepa sin hacer scroll. */
