@@ -1604,59 +1604,60 @@ body.modo-final #zona-final.video-overlay.modo-final .video-popup {
 
 /* Compactamos un poco los espacios para que todo quepa sin hacer scroll. */
 body.modo-final #zona-final #pantallaFinal .decoracion-final {
-    margin-bottom: 8px;
+    margin-bottom: 15px;
 }
 
 body.modo-final #zona-final #pantallaFinal h1 {
-    margin: 12px 0;
+    margin: 20px 0;
     font-size: clamp(30px, 3.5vw, 46px);
     line-height: 1.08;
 }
 
 body.modo-final #zona-final #pantallaFinal .separador-final {
-    margin: 12px auto;
+    margin: 20px auto;
 }
 
 body.modo-final #zona-final #pantallaFinal .mensaje-final {
-    margin: 10px auto;
-    line-height: 1.55;
+    margin: 16px auto;
+    line-height: 1.8;
 }
 
 body.modo-final #zona-final #pantallaFinal .frase-final {
-    margin: 16px auto 8px;
+    margin: 26px auto 14px;
 }
 
 body.modo-final #zona-final #pantallaFinal .firma-final {
-    margin: 10px auto 18px;
+    margin: 18px auto 26px;
 }
 
 /* La playlist se centra verticalmente y se coloca a la derecha,
    exclusivamente durante la felicitación final. */
 body.modo-final #panel-musica {
     position: fixed;
-    top: -250%;
+    top: 8vh;
     right: clamp(20px, 9.6vw, 160px);
     left: auto;
     width: min(295px, 18vw);
     max-width: 340px;
-    transform: translateY(-50%);
+    transform: none;
     z-index: 10001;
+    animation: none;
 }
 
 /* Paco y Miss Fortune mantienen su composición lateral en esta pantalla. */
 body.modo-final #panel-personaje .personaje-paco {
     position: fixed;
-    left: 1vw;
+    left: 7vw;
     right: auto;
-    top: 27vh;
+    top: 21vh;
     bottom: auto;
-    height: min(34vh, 350px);
+    height: min(48vh, 500px);
     z-index: 3;
 }
 
 body.modo-final #panel-personaje .personaje-miss {
     position: fixed;
-    left: 10vw;
+    left: 13.5vw;
     right: auto;
     top: auto;
     bottom: -5vh;
