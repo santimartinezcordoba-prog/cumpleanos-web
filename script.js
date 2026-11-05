@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const terminarSorpresa = document.getElementById("terminarSorpresa");
     const pantallaFinal = document.getElementById("pantallaFinal");
     const volverCartasFinal = document.getElementById("volverCartasFinal");
+    const volverVideosFinal = document.getElementById("volverVideosFinal");
 
     const form = document.getElementById("formFelicitacion");
     const estadoFormulario = document.getElementById("estadoFormulario");
@@ -83,7 +84,7 @@ const elementos = {
     videoAnterior,videoSiguiente,volverCartas,
     volverColeccionVideos, pantallaReproduccion, coleccionVideos,
     listaVideos, volverCartasColeccion, terminarSorpresa,
-    pantallaFinal, volverCartasFinal,
+    pantallaFinal, volverCartasFinal, volverVideosFinal,
 };
 
     const faltante = Object.entries(elementos)
@@ -770,6 +771,23 @@ const elementos = {
     volverCartas.addEventListener("click", volverALasCartas);
     volverCartasColeccion.addEventListener("click", volverALasCartas);
     volverCartasFinal.addEventListener("click", volverALasCartas);
+
+    // Desde la felicitación final se puede regresar a la colección completa.
+    volverVideosFinal.addEventListener("click", () => {
+        if (!accesoAutorizado) return;
+
+        detenerVideoActual();
+        galeria.replaceChildren();
+
+        document.body.classList.remove("modo-final");
+        document.body.classList.add("modo-videos");
+        zonaFinal.classList.remove("modo-final");
+
+        panelMusica.classList.add("oculto");
+        panelPersonaje.classList.add("oculto");
+
+        mostrarColeccionVideos();
+    });
 
 
     // Felicitación final: ocultamos las cartas y los vídeos, pero no
