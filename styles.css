@@ -202,6 +202,12 @@ h1 span {
     margin-top: 28px;
 }
 
+.pregunta-identidad {
+    margin: 18px 0 0;
+    color: #ffe4ac;
+    font: 800 23px 'Outfit', sans-serif;
+}
+
 button {
     border: 0;
     font: 700 15px 'DM Sans', sans-serif;
