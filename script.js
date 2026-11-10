@@ -50,6 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const zonaFinal = document.getElementById("zona-final");
     const volverCartasFinal = document.getElementById("volverCartasFinal");
+    const abrirPostal = document.getElementById("abrirPostal");
+    const zonaPostal = document.getElementById("zona-postal");
+    const imagenPostal = document.getElementById("imagenPostal");
+    const volverFelicitacion = document.getElementById("volverFelicitacion");
+    const volverCartasPostal = document.getElementById("volverCartasPostal");
 
     const form = document.getElementById("formFelicitacion");
     const estadoFormulario = document.getElementById("estadoFormulario");
@@ -66,7 +71,8 @@ const elementos = {
     muro, abrirSorpresaFinal,
     modalCarta, cerrarCarta, numeroCarta,
     nombreCarta, mensajeCarta,
-    zonaFinal, volverCartasFinal, form, estadoFormulario,
+    zonaFinal, volverCartasFinal, abrirPostal, zonaPostal, imagenPostal,
+    volverFelicitacion, volverCartasPostal, form, estadoFormulario,
     panelMusica, panelPersonaje, cartaAnterior, cartaSiguiente,
 };
 
@@ -81,6 +87,16 @@ const elementos = {
     // por la tarjeta y poder desplazarse hasta los botones.
     document.body.appendChild(modalCarta);
     document.body.appendChild(zonaFinal);
+    document.body.appendChild(zonaPostal);
+
+    // La postal solo se puede abrir cuando el archivo original esté publicado.
+    // Evita mostrar una imagen rota antes de subirla a GitHub.
+    const mostrarBotonPostal = () => abrirPostal.classList.remove("oculto");
+    if (imagenPostal.complete && imagenPostal.naturalWidth > 0) {
+        mostrarBotonPostal();
+    } else {
+        imagenPostal.addEventListener("load", mostrarBotonPostal, { once: true });
+    }
 
     // ==========================================
     // 3. ESTADO DE LA PÁGINA
@@ -134,6 +150,7 @@ const elementos = {
 
     detenerCorazones();
     document.body.classList.remove("modo-final", "modal-abierto");
+    zonaPostal.classList.add("oculto");
 
         accesoAutorizado = false;
         felicitacionesPrivadas = [];
@@ -493,12 +510,28 @@ const elementos = {
         lanzarConfeti();
     });
 
-    volverCartasFinal.addEventListener("click", () => {
+    function volverALasCartasDesdeFinal() {
+        zonaPostal.classList.add("oculto");
         zonaFinal.classList.add("oculto");
         document.body.classList.remove("modo-final");
         zonaCartas.classList.remove("oculto");
         mostrarColeccionCartas();
         zonaCartas.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    volverCartasFinal.addEventListener("click", volverALasCartasDesdeFinal);
+    volverCartasPostal.addEventListener("click", volverALasCartasDesdeFinal);
+
+    abrirPostal.addEventListener("click", () => {
+        if (!accesoAutorizado || !imagenPostal.complete || !imagenPostal.naturalWidth) return;
+        zonaFinal.classList.add("oculto");
+        zonaPostal.classList.remove("oculto");
+        lanzarConfeti();
+    });
+
+    volverFelicitacion.addEventListener("click", () => {
+        zonaPostal.classList.add("oculto");
+        zonaFinal.classList.remove("oculto");
     });
 
     // ==========================================
