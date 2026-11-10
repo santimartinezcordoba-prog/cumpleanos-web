@@ -1077,6 +1077,12 @@ body.modal-abierto {
 }
 
 
+/* La postal muestra solo a Paco Fiestas, sin cambiar otras pantallas. */
+body.modo-postal #panel-personaje .personaje-miss,
+body.modo-postal #panel-personaje .personaje-reyna {
+    display: none !important;
+}
+
 /* PANTALLA EXCLUSIVA PARA LA POSTAL ORIGINAL */
 #zona-postal.postal-overlay {
     position: fixed;
