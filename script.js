@@ -89,6 +89,7 @@ const elementos = {
     let felicitacionesPrivadas = [];
     let indiceCarta = 0;
     let accesoAutorizado = false;
+    let ultimaCartaAbierta = null;
 
     function ocultarTodo() {
         seleccion.classList.add("oculto");
@@ -463,29 +464,6 @@ const elementos = {
 
     });
 
-    // Abrir una carta en el centro de la pantalla
-    function abrirCarta(f, index, origen) {
-
-        if (!accesoAutorizado) return;
-
-        ultimaCartaAbierta = origen;
-
-        numeroCarta.textContent =
-            `CARTA ${index + 1} DE ${felicitacionesPrivadas.length}`;
-
-        nombreCarta.textContent =
-            `💌 ${f.nombre || "Alguien especial"}`;
-
-        mensajeCarta.textContent =
-            f.mensaje || "";
-
-        modalCarta.classList.remove("oculto");
-
-        document.body.classList.add("modal-abierto");
-
-        cerrarCarta.focus();
-    }
-
     // Cerrar la carta
     function cerrarModalCarta() {
 
@@ -500,30 +478,6 @@ const elementos = {
         }
     }
 
-    cerrarCarta.addEventListener("click", cerrarModalCarta);
-
-    // Cerrar al pulsar fuera de la carta
-    modalCarta.addEventListener("click", (evento) => {
-
-        if (evento.target === modalCarta) {
-            cerrarModalCarta();
-        }
-
-    });
-
-    // Cerrar también con Escape
-    document.addEventListener("keydown", (evento) => {
-
-        if (
-            evento.key === "Escape" &&
-            !modalCarta.classList.contains("oculto")
-        ) {
-            cerrarModalCarta();
-        }
-
-    });
-
-   
     // ==========================================
     // 7. FELICITACIÓN FINAL
     // ==========================================
