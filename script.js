@@ -149,7 +149,7 @@ const elementos = {
     volverInicio.addEventListener("click", () => {
 
     detenerCorazones();
-    document.body.classList.remove("modo-final", "modal-abierto");
+    document.body.classList.remove("modo-final", "modo-postal", "modal-abierto");
     zonaPostal.classList.add("oculto");
 
         accesoAutorizado = false;
@@ -513,7 +513,7 @@ const elementos = {
     function volverALasCartasDesdeFinal() {
         zonaPostal.classList.add("oculto");
         zonaFinal.classList.add("oculto");
-        document.body.classList.remove("modo-final");
+        document.body.classList.remove("modo-final", "modo-postal");
         zonaCartas.classList.remove("oculto");
         mostrarColeccionCartas();
         zonaCartas.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -526,12 +526,14 @@ const elementos = {
         if (!accesoAutorizado || !imagenPostal.complete || !imagenPostal.naturalWidth) return;
         zonaFinal.classList.add("oculto");
         zonaPostal.classList.remove("oculto");
+        document.body.classList.add("modo-postal");
         lanzarConfeti();
     });
 
     volverFelicitacion.addEventListener("click", () => {
         zonaPostal.classList.add("oculto");
         zonaFinal.classList.remove("oculto");
+        document.body.classList.remove("modo-postal");
     });
 
     // ==========================================
