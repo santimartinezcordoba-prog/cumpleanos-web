@@ -1077,6 +1077,87 @@ body.modal-abierto {
 }
 
 
+/* PANTALLA EXCLUSIVA PARA LA POSTAL ORIGINAL */
+#zona-postal.postal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10002;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    pointer-events: none;
+    background: transparent;
+}
+
+#zona-postal .postal-pantalla {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: min(100%, 1050px);
+    max-height: calc(100dvh - 30px);
+    pointer-events: auto;
+}
+
+#zona-postal .postal-encabezado {
+    margin: 0;
+    font: 800 clamp(17px, 2.3vw, 26px) Outfit, sans-serif;
+    color: #ffe4ac;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, .5);
+    text-align: center;
+}
+
+#zona-postal #imagenPostal {
+    display: block;
+    width: min(100%, 950px);
+    max-width: min(70vw, 1050px);
+    max-height: calc(100dvh - 165px);
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 15px 60px rgba(0,0,0,.45), 0 0 24px rgba(255,173,219,.27);
+    animation: mostrarPostal .65s ease both;
+}
+
+#zona-postal .postal-botones {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+#zona-postal .postal-botones button,
+#zona-final #abrirPostal {
+    padding: 14px 22px;
+    border: 0;
+    border-radius: 99px;
+    color: #30183e;
+    font-weight: 800;
+    background: linear-gradient(110deg, #ff8ec7, #ffd7a0);
+}
+
+#zona-final .acciones-final {
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+@keyframes mostrarPostal {
+    from { opacity: 0; transform: scale(.92) translateY(22px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (max-width: 850px) {
+    #zona-postal .postal-pantalla {
+        width: 100%;
+    }
+    #zona-postal #imagenPostal {
+        max-width: 96vw;
+        max-height: calc(100dvh - 165px);
+    }
+}
+
 /* FELICITACIÓN FINAL (solo cartas y mensaje) */
 
 #zona-final.final-overlay {
