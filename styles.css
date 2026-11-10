@@ -1177,8 +1177,28 @@ body.modo-final {
     overflow: hidden;
 }
 
+/* Al abrir la felicitación final, retiramos la tarjeta anterior:
+   no debe dejar franjas ni desplazar a los personajes. */
 body.modo-final .birthday-card {
-    visibility: hidden;
+    display: none;
+}
+
+body.modo-final .birthday-layout {
+    position: static;
+    height: 0;
+    min-height: 0;
+    margin: 0;
+}
+
+/* Anclamos el panel de personajes a la pantalla, para conservar
+   las posiciones que elegiste incluso sin la sección de vídeos. */
+body.modo-final #panel-personaje {
+    position: fixed;
+    left: max(0px, calc((100vw - 1540px) / 2));
+    top: 12vh;
+    width: 560px;
+    height: 760px;
+    z-index: 2;
 }
 
 body.modo-final #piePagina {
