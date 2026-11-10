@@ -223,7 +223,25 @@ const elementos = {
                 throw new Error("La respuesta del servidor no es válida.");
             }
 
-            felicitacionesPrivadas = resultado.felicitaciones;
+            // Orden especial de lectura: Gok primero y Kosko al final.
+            // Las demás cartas conservan su orden original.
+            const normalizarNombre = (nombre) =>
+                String(nombre ?? "").trim().toLocaleLowerCase("es");
+
+            felicitacionesPrivadas = resultado.felicitaciones
+                .map((carta, posicion) => ({ carta, posicion }))
+                .sort((a, b) => {
+                    const prioridad = (nombre) => {
+                        const nombreNormalizado = normalizarNombre(nombre);
+                        if (nombreNormalizado === "gok") return 0;
+                        if (nombreNormalizado === "kosko") return 2;
+                        return 1;
+                    };
+                    return prioridad(a.carta.nombre) - prioridad(b.carta.nombre)
+                        || a.posicion - b.posicion;
+                })
+                .map(({ carta }) => carta);
+
             accesoAutorizado = true;
 
             mostrarPantalla(zonaBrenda);
