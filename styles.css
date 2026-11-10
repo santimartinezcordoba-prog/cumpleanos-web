@@ -445,8 +445,7 @@ button:disabled {
 
 /* CARTAS Y MENSAJES */
 
-#zona-cartas,
-#zona-final {
+#zona-cartas {
     margin-top: 38px;
     padding: 24px 18px;
     border: 1px solid rgba(255,223,148,.25);
@@ -456,7 +455,6 @@ button:disabled {
 }
 
 #zona-cartas h2,
-#zona-final h2,
 #zona-invitado h2 {
     font: 800 24px Outfit, sans-serif;
     color: #ffe4ac;
@@ -503,41 +501,6 @@ button:disabled {
     line-height: 1.8;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-}
-
-#galeriaVideos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%,260px),1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.tarjeta-video {
-    min-width: 0;
-    padding: 18px;
-    text-align: left;
-    overflow-wrap: anywhere;
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 18px;
-}
-
-.tarjeta-video h3 {
-    margin: 0 0 10px;
-    color: #ffe4ac;
-}
-
-.tarjeta-video p {
-    color: #e9def6;
-    line-height: 1.6;
-}
-
-.tarjeta-video video {
-    display: block;
-    width: 100%;
-    border-radius: 12px;
-    background: #090611;
-    margin-top: 12px;
 }
 
 .revelar-dinamico {
@@ -599,31 +562,6 @@ button:disabled {
     text-align: center;
     color: #ffe0ac;
     font-size: 14px;
-}
-
-.enviar-video {
-    margin-top: 30px;
-    padding: 24px;
-    background: rgba(255,255,255,.10);
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 20px;
-}
-
-.enviar-video h2 {
-    margin-top: 0;
-}
-
-.enviar-video p {
-    color: #e1d9f1;
-    line-height: 1.7;
-}
-
-.enviar-video a {
-    display: inline-block;
-    margin-top: 8px;
-    color: #ffb3db;
-    font-weight: 700;
-    overflow-wrap: anywhere;
 }
 
 /* VOLVER Y PIE */
@@ -848,8 +786,7 @@ footer {
         width: min(100%,230px);
     }
 
-    #zona-cartas,
-    #zona-final {
+    #zona-cartas {
         padding: 18px 12px;
     }
 }
@@ -1140,59 +1077,36 @@ body.modal-abierto {
 }
 
 
-/* ==========================================
-   SORPRESA FINAL - VENTANA DE VÍDEOS
-========================================== */
+/* FELICITACIÓN FINAL (solo cartas y mensaje) */
 
-#zona-final.video-overlay {
+#zona-final.final-overlay {
     position: fixed;
     inset: 0;
     z-index: 10000;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
     margin: 0;
     padding: 20px;
-
-    background: rgba(13, 6, 32, 0.94);
-    backdrop-filter: blur(12px);
-
-    overflow-y: auto;
-    animation: aparecerFondoVideo 0.4s ease both;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    pointer-events: none;
+    overflow: hidden;
 }
 
-/* Ventana central */
-
-#zona-final .video-popup {
-    width: min(100%, 760px);
-    max-height: calc(100dvh - 40px);
+#zona-final.final-overlay .final-contenido {
+    width: min(760px, 56vw);
+    max-height: calc(100dvh - 32px);
+    padding: 14px 20px;
     overflow-y: auto;
-
-    padding: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 28px;
-
-    background: linear-gradient(
-        145deg,
-        #584077,
-        #2c1d49
-    );
-
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.55);
+    overscroll-behavior: contain;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
     text-align: center;
-
-    animation: entradaPopupVideo 0.6s
-        cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    pointer-events: auto;
 }
 
-/* Etiqueta y título */
-
-#zona-final .video-etiqueta {
+#zona-final .etiqueta-final {
     margin: 0 0 12px;
     font-size: 11px;
     letter-spacing: 3px;
@@ -1200,339 +1114,14 @@ body.modal-abierto {
     color: #e5caff;
 }
 
-#zona-final .video-popup h2 {
-    margin: 0 0 24px;
-    font-family: Outfit, sans-serif;
-    font-size: clamp(24px, 4vw, 32px);
-    color: #ffe0ac;
-}
-
-/* Contenedor del vídeo actual */
-
-#zona-final #galeriaVideos {
-    display: block;
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
-}
-
-/* Tarjeta individual */
-
-#zona-final .tarjeta-video {
-    width: 100%;
-    min-width: 0;
-    padding: 20px;
-
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-
-    background: rgba(255, 255, 255, 0.07);
-    text-align: center;
-    overflow-wrap: anywhere;
-}
-
-#zona-final .tarjeta-video h3 {
-    margin: 0 0 12px;
-    font-size: 23px;
-    color: #ffbadc;
-}
-
-#zona-final .tarjeta-video p {
-    margin: 0 0 18px;
-    font-size: 15px;
-    color: #ffe0ac;
-}
-
-/* Reproductor */
-
-#zona-final .tarjeta-video video {
-    display: block;
-    width: 100%;
-    max-height: 52vh;
-    max-height: 52dvh;
-
-    margin: 0 auto;
-    border-radius: 15px;
-
-    background: #090611;
-    object-fit: contain;
-}
-
-/* Navegación */
-
-#zona-final .video-controles {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 24px;
-}
-
-#zona-final .video-controles button,
-#zona-final #volverCartas {
-    padding: 14px 22px;
-    border: none;
-    border-radius: 99px;
-
-    background: linear-gradient(
-        110deg,
-        #ff8ec7,
-        #ffd7a0
-    );
-
-    color: #30183e;
-    font-size: 14px;
-    font-weight: 800;
-
-    cursor: pointer;
-    transition: transform 0.25s, box-shadow 0.25s;
-}
-
-#zona-final .video-controles button:hover,
-#zona-final #volverCartas:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255, 120, 186, 0.3);
-}
-
-#zona-final .video-controles button:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Volver a las cartas */
-
-#zona-final #volverCartas {
-    display: block;
-    margin: 25px auto 0;
-    background: linear-gradient(
-        110deg,
-        #c6a5ff,
-        #ffb5d9
-    );
-}
-
-/* Ocultar la página anterior cuando se ven vídeos */
-
-body.modo-videos {
-    overflow: hidden;
-}
-
-body.modo-videos .birthday-layout,
-body.modo-videos #piePagina {
-    visibility: hidden;
-}
-
-/* Animaciones */
-
-@keyframes aparecerFondoVideo {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes entradaPopupVideo {
-    from {
-        opacity: 0;
-        transform: translateY(45px) scale(0.88);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Animación al cambiar de vídeo */
-
-#zona-final .tarjeta-video.animar-video {
-    animation: cambioDeVideo 0.5s ease both;
-}
-
-@keyframes cambioDeVideo {
-    from {
-        opacity: 0;
-        transform: translateX(22px) scale(0.96);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-    }
-}
-
-/* Adaptación a móviles */
-
-@media (max-width: 600px) {
-    #zona-final.video-overlay {
-        padding: 12px;
-    }
-
-    #zona-final .video-popup {
-        padding: 22px 15px;
-        border-radius: 22px;
-        max-height: calc(100dvh - 24px);
-    }
-
-    #zona-final .tarjeta-video {
-        padding: 12px;
-    }
-
-    #zona-final .tarjeta-video h3 {
-        font-size: 20px;
-    }
-
-    #zona-final .video-controles {
-        gap: 10px;
-    }
-
-    #zona-final .video-controles button,
-    #zona-final #volverCartas {
-        padding: 12px 15px;
-        font-size: 13px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #zona-final.video-overlay,
-    #zona-final .video-popup,
-    #zona-final .tarjeta-video.animar-video {
-        animation: none;
-    }
-}
-
-
-/* GALERÍA FINAL DE VÍDEOS */
-
-#zona-final .coleccion-videos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
-    gap: 16px;
-    margin: 24px 0 28px;
-}
-
-#zona-final .miniatura-video {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    min-height: 165px;
-    padding: 22px 16px;
-    border: 1px solid rgba(255, 207, 237, 0.35);
-    border-radius: 20px;
-    background: linear-gradient(150deg, #65457f, #33224f);
-    color: #fff;
-    text-align: center;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, .18);
-    cursor: pointer;
-    transition: transform .25s ease, box-shadow .25s ease;
-}
-
-#zona-final .miniatura-video:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 34px rgba(255, 131, 187, .25);
-}
-
-#zona-final .miniatura-video-icono {
-    display: grid;
-    place-items: center;
-    width: 62px;
-    height: 62px;
-    border-radius: 50%;
-    background: linear-gradient(115deg, #ff8ec7, #ffdb9b);
-    color: #3b2156;
-    font-size: 27px;
-    padding-left: 3px;
-}
-
-#zona-final .miniatura-video strong {
-    color: #ffe4ac;
-    font: 800 17px Outfit, sans-serif;
-    overflow-wrap: anywhere;
-}
-
-#zona-final .miniatura-video span:last-child {
-    color: #eadcf6;
-    font-size: 13px;
-    overflow-wrap: anywhere;
-}
-
-#zona-final .intro-coleccion {
-    color: #eadcf6;
-    line-height: 1.7;
-}
-
-#zona-final .acciones-coleccion {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 22px;
-}
-
-#zona-final #volverColeccionVideos,
-#zona-final .acciones-coleccion button,
-#zona-final #pantallaFinal .acciones-final button {
-    padding: 14px 22px;
-    border: 0;
-    border-radius: 99px;
-    color: #30183e;
-    background: linear-gradient(110deg, #ff8ec7, #ffd7a0);
-    font-weight: 800;
-    cursor: pointer;
-}
-
-#zona-final #volverColeccionVideos {
-    display: block;
-    margin: 12px auto 0;
-}
-
-#zona-final #pantallaFinal .acciones-final {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 22px;
-}
-
-#zona-final #volverColeccionVideos:hover,
-#zona-final .acciones-coleccion button:hover,
-#zona-final #pantallaFinal .acciones-final button:hover {
-    box-shadow: 0 10px 25px rgba(255, 120, 186, .3);
-}
-
-/* PANTALLA DE FELICITACIÓN FINAL:
-   Se conservan los personajes y la playlist. */
-
-body.modo-final .birthday-card {
-    visibility: hidden;
-}
-
-#zona-final.video-overlay.modo-final {
-    background: transparent;
-    backdrop-filter: none;
-    pointer-events: none;
-}
-
-#zona-final.video-overlay.modo-final .video-popup {
-    pointer-events: auto;
-}
-
-#zona-final #pantallaFinal .decoracion-final {
+#zona-final .decoracion-final {
     font-size: clamp(25px, 5vw, 45px);
     margin-bottom: 15px;
     animation: flotandoFinal 2.5s ease-in-out infinite;
 }
 
 #zona-final #pantallaFinal h1 {
+    margin: 20px 0;
     font-size: clamp(30px, 5vw, 50px);
     line-height: 1.12;
     color: #ffd6ec;
@@ -1563,93 +1152,62 @@ body.modo-final .birthday-card {
     margin: 18px auto 26px;
 }
 
+#zona-final .acciones-final {
+    display: flex;
+    justify-content: center;
+    margin-top: 22px;
+}
+
+#zona-final #volverCartasFinal {
+    padding: 14px 22px;
+    border: none;
+    border-radius: 99px;
+    color: #30183e;
+    background: linear-gradient(110deg, #ff8ec7, #ffd7a0);
+    font-weight: 800;
+}
+
 @keyframes flotandoFinal {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
 }
 
-@media (max-width: 600px) {
-    #zona-final .coleccion-videos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-    }
-    #zona-final .miniatura-video {
-        padding: 15px 10px;
-        min-height: 150px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #zona-final .miniatura-video {
-        transition: none;
-    }
-    #zona-final #pantallaFinal .decoracion-final {
-        animation: none;
-    }
-}
-
-/* AJUSTES EXCLUSIVOS DE LA FELICITACIÓN FINAL */
-
-/* Esta pantalla ocupa el alto del navegador: no se desplaza la página. */
 body.modo-final {
     height: 100dvh;
     overflow: hidden;
-    background-attachment: fixed;
 }
 
-/* La pantalla final no necesita el pie de página que queda bajo los botones. */
+body.modo-final .birthday-card {
+    visibility: hidden;
+}
+
 body.modo-final #piePagina {
     display: none !important;
 }
 
-/* La felicitación queda flotando directamente sobre el fondo, sin tarjeta. */
-body.modo-final #zona-final.video-overlay.modo-final {
-    align-items: center;
-    overflow: hidden;
-    padding: 18px;
-    background: transparent;
-    backdrop-filter: none;
+/* Deja el pie por detrás de la ventana de cartas. */
+body.modal-abierto #piePagina {
+    visibility: hidden;
 }
 
-body.modo-final #zona-final.video-overlay.modo-final .video-popup {
-    width: min(760px, 56vw);
-    max-height: calc(100dvh - 36px);
+.modal-carta {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
     overflow-y: auto;
-    padding: 14px 20px;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
+    overscroll-behavior: contain;
+    z-index: 10000;
 }
 
-/* Compactamos un poco los espacios para que todo quepa sin hacer scroll. */
-body.modo-final #zona-final #pantallaFinal .decoracion-final {
-    margin-bottom: 15px;
+.modal-carta__contenido {
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin: auto;
 }
 
-body.modo-final #zona-final #pantallaFinal h1 {
-    margin: 20px 0;
-    font-size: clamp(30px, 5vw, 50px);
-    line-height: 1.12;
-}
-
-body.modo-final #zona-final #pantallaFinal .separador-final {
-    margin: 20px auto;
-}
-
-body.modo-final #zona-final #pantallaFinal .mensaje-final {
-    margin: 16px auto;
-    line-height: 1.8;
-}
-
-body.modo-final #zona-final #pantallaFinal .frase-final {
-    margin: 26px auto 14px;
-}
-
-body.modo-final #zona-final #pantallaFinal .firma-final {
-    margin: 18px auto 26px;
-}
+/* Mantener el brillo del texto, pero no el fondo sólido. */
 
 /* La playlist se centra verticalmente y se coloca a la derecha,
    exclusivamente durante la felicitación final. */
@@ -1703,7 +1261,7 @@ body.modo-final #panel-personaje .personaje-reyna {
         width: min(270px, 24vw);
     }
 
-    body.modo-final #zona-final.video-overlay.modo-final .video-popup {
+    body.modo-final #zona-final.final-overlay .final-contenido {
         width: min(680px, calc(100vw - 330px));
         padding: 22px 26px;
     }
@@ -1727,12 +1285,12 @@ body.modo-final #panel-personaje .personaje-reyna {
         overflow: hidden;
     }
 
-    body.modo-final #zona-final.video-overlay.modo-final {
+    body.modo-final #zona-final.final-overlay {
         align-items: flex-start;
         padding: 12px;
     }
 
-    body.modo-final #zona-final.video-overlay.modo-final .video-popup {
+    body.modo-final #zona-final.final-overlay .final-contenido {
         width: 100%;
         max-height: calc(100dvh - 150px);
         margin-top: 4px;
